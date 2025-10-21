@@ -6,7 +6,11 @@ import { FaEnvelope, FaLock, FaArrowLeft } from 'react-icons/fa';
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ 
+    email: localStorage.getItem('rememberedEmail') || '', 
+    password: '' 
+  });
+  const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberedEmail'));
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -17,6 +21,14 @@ const Login = () => {
 
     try {
       await login(formData.email, formData.password);
+      
+      // حفظ البريد الإلكتروني إذا اختار المستخدم "تذكرني"
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', formData.email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+      
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.detail || 'حدث خطأ في تسجيل الدخول');
