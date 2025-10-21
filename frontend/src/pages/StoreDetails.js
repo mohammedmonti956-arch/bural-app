@@ -43,6 +43,20 @@ const StoreDetails = () => {
 
   const isOwner = user && store && user.id === store.owner_id;
 
+  const handleShare = () => {
+    const shareUrl = `${window.location.origin}/stores/${store.id}`;
+    if (navigator.share) {
+      navigator.share({
+        title: store.name,
+        text: store.description,
+        url: shareUrl,
+      });
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      alert('تم نسخ الرابط!');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50" dir="rtl">
