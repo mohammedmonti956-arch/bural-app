@@ -45,6 +45,8 @@ function AppRoutes() {
       <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/profile/create-store" element={<ProtectedRoute><CreateStore /></ProtectedRoute>} />
+      <Route path="/profile/stores/:id/products" element={<ProtectedRoute><ManageProducts /></ProtectedRoute>} />
+      <Route path="/profile/stores/:id/services" element={<ProtectedRoute><ManageServices /></ProtectedRoute>} />
     </Routes>
   );
 }
