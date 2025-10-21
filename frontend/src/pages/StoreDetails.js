@@ -4,7 +4,7 @@ import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine } from 'react-icons/fa';
 
 const StoreDetails = () => {
   const { id } = useParams();
