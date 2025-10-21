@@ -111,15 +111,31 @@ const StoreDetails = () => {
                 </span>
               </div>
             </div>
-            {isOwner && (
-              <Link
-                to={`/profile/stores/${store.id}/edit`}
-                data-testid="edit-store-btn"
+            <div className="flex gap-2">
+              <button
+                onClick={handleShare}
                 className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition"
               >
-                <FaEdit /> تعديل
-              </Link>
-            )}
+                <FaShare /> مشاركة
+              </button>
+              {isOwner && (
+                <>
+                  <Link
+                    to={`/profile/stores/${store.id}/analytics`}
+                    className="flex items-center gap-2 bg-green-100 hover:bg-green-200 text-green-700 px-4 py-2 rounded-lg transition"
+                  >
+                    <FaChartLine /> التحليلات
+                  </Link>
+                  <Link
+                    to={`/profile/stores/${store.id}/edit`}
+                    data-testid="edit-store-btn"
+                    className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition"
+                  >
+                    <FaEdit /> تعديل
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
