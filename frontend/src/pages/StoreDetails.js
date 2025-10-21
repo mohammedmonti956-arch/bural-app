@@ -193,11 +193,26 @@ const StoreDetails = () => {
                 {products.length > 0 ? (
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {products.map((product) => (
-                      <div key={product.id} className="border border-gray-200 rounded-lg p-4" data-testid={`product-${product.id}`}>
-                        <h3 className="font-bold text-lg mb-2">{product.name}</h3>
-                        <p className="text-gray-600 text-sm mb-2">{product.description}</p>
-                        <p className="text-blue-600 font-bold text-xl">{product.price} ر.س</p>
-                        <p className="text-gray-500 text-sm">المخزون: {product.stock}</p>
+                      <div key={product.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition" data-testid={`product-${product.id}`}>
+                        {product.image && (
+                          <div className="h-48 bg-gray-200">
+                            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                        <div className="p-4">
+                          <h3 className="font-bold text-lg mb-2">{product.name}</h3>
+                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-blue-600 font-bold text-xl">{product.price} ر.س</p>
+                            <div className="flex items-center gap-2">
+                              <button className="text-red-500 hover:scale-110 transition">
+                                <FaRegHeart className="text-xl" />
+                              </button>
+                              <span className="text-gray-600">{product.likes || 0}</span>
+                            </div>
+                          </div>
+                          <p className="text-gray-500 text-sm">المخزون: {product.stock}</p>
+                        </div>
                       </div>
                     ))}
                   </div>
