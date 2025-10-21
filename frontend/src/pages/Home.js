@@ -84,10 +84,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Featured Stores */}
+      {/* Top Rated Stores */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold" data-testid="featured-stores-title">المتاجر المميزة</h2>
+          <h2 className="text-3xl font-bold">المتاجر الأعلى تقييماً ⭐</h2>
           <Link to="/stores" className="text-blue-600 hover:text-blue-700 font-semibold">عرض الكل ←</Link>
         </div>
         
@@ -95,24 +95,48 @@ const Home = () => {
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           </div>
-        ) : stores.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="stores-grid">
-            {stores.map((store) => (
+        ) : topStores.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {topStores.map((store) => (
               <StoreCard key={store.id} store={store} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-lg" data-testid="no-stores-message">
+          <div className="text-center py-12 bg-gray-50 rounded-lg">
             <FaStore className="mx-auto text-6xl text-gray-300 mb-4" />
             <p className="text-gray-500 text-lg">لا توجد متاجر حالياً</p>
-            {user?.is_store_owner && (
-              <Link to="/profile/create-store" className="text-blue-600 hover:text-blue-700 mt-2 inline-block">
-                أضف متجرك الآن
-              </Link>
-            )}
           </div>
         )}
       </div>
+
+      {/* Popular Products */}
+      {popularProducts.length > 0 && (
+        <div className="max-w-6xl mx-auto px-4 py-8 bg-gray-100">
+          <h2 className="text-3xl font-bold mb-6">المنتجات الأكثر إعجاباً 🔥</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {popularProducts.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                {product.image && (
+                  <div className="h-48 bg-gray-200">
+                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2">{product.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-blue-600 font-bold text-xl">{product.price} ر.س</span>
+                    <div className="flex items-center gap-1 text-red-500">
+                      <FaStar />
+                      <span className="font-bold">{product.likes || 0}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <BottomNavigation />
     </div>
