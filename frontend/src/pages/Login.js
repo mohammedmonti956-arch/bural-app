@@ -108,23 +108,6 @@ const Login = () => {
             </button>
           </form>
 
-          {/* حساب تجريبي سريع */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800 font-semibold mb-2">💡 تسجيل دخول تجريبي سريع:</p>
-            <button
-              onClick={() => {
-                setFormData({ email: 'owner@test.com', password: 'test123' });
-                setRememberMe(true);
-              }}
-              className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold py-2 px-4 rounded transition text-sm"
-            >
-              استخدام الحساب التجريبي
-            </button>
-            <p className="text-xs text-gray-600 mt-2 text-center">
-              owner@test.com / test123
-            </p>
-          </div>
-
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               ليس لديك حساب؟{' '}
