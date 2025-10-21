@@ -712,6 +712,24 @@ async def search(q: str, type: str = "all"):
     return results
 
 # ==========================
+# IMAGE UPLOAD
+# ==========================
+
+@api_router.post("/upload-image")
+async def upload_image(file: UploadFile = File(...), current_user: User = Depends(get_current_user)):
+    # Read file content
+    contents = await file.read()
+    
+    # Convert to base64
+    base64_image = base64.b64encode(contents).decode('utf-8')
+    
+    # Create data URL
+    content_type = file.content_type or 'image/jpeg'
+    data_url = f"data:{content_type};base64,{base64_image}"
+    
+    return {"image_url": data_url}
+
+# ==========================
 # ROOT ROUTE
 # ==========================
 
