@@ -11,6 +11,8 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  const [results, setResults] = useState({ stores: [], services: [], products: [] });
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -19,7 +21,7 @@ const Search = () => {
     setSearched(true);
     try {
       const response = await axiosInstance.get('/search', {
-        params: { q: query, type: 'all' }
+        params: { q: query, scope: 'all' }
       });
       setResults(response.data);
     } catch (error) {
