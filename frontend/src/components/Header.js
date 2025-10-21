@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaStore, FaUser, FaSignOutAlt, FaSearch, FaSignInAlt } from 'react-icons/fa';
+import { FaStore, FaUser, FaSignOutAlt, FaSearch, FaSignInAlt, FaDownload } from 'react-icons/fa';
 
 const Header = () => {
   const { user, logout, isAuthenticated } = useAuth();
