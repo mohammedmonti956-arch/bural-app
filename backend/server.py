@@ -735,6 +735,116 @@ async def search(q: str, type: str = "all"):
     return results
 
 # ==========================
+# ORDER ROUTES
+# ==========================
+
+@api_router.post("/orders", response_model=Order)
+async def create_order(order_data: OrderCreate, current_user: User = Depends(get_current_user)):
+    order_dict = order_data.model_dump()
+    order_dict['user_id'] = current_user.id
+    order_obj = Order(**order_dict)
+    
+    doc = order_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.orders.insert_one(doc)
+    
+    return order_obj
+
+@api_router.get("/orders/my-orders", response_model=List[Order])
+async def get_my_orders(current_user: User = Depends(get_current_user)):
+    orders = await db.orders.find({"user_id": current_user.id}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    
+    for order in orders:
+        if isinstance(order.get('created_at'), str):
+            order['created_at'] = datetime.fromisoformat(order['created_at'])
+    
+    return orders
+
+@api_router.get("/stores/{store_id}/orders", response_model=List[Order])
+async def get_store_orders(store_id: str, current_user: User = Depends(get_current_user)):
+    store = await db.stores.find_one({"id": store_id})
+    if not store or store['owner_id'] != current_user.id:
+        raise HTTPException(status_code=403, detail="غير مصرح")
+    
+    orders = await db.orders.find({"store_id": store_id}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    
+    for order in orders:
+        if isinstance(order.get('created_at'), str):
+            order['created_at'] = datetime.fromisoformat(order['created_at'])
+    
+    return orders
+
+@api_router.put("/orders/{order_id}/status")
+async def update_order_status(order_id: str, status: str, current_user: User = Depends(get_current_user)):
+    order = await db.orders.find_one({"id": order_id})
+    if not order:
+        raise HTTPException(status_code=404, detail="الطلب غير موجود")
+    
+    store = await db.stores.find_one({"id": order['store_id']})
+    if store['owner_id'] != current_user.id:
+        raise HTTPException(status_code=403, detail="غير مصرح")
+    
+    await db.orders.update_one(
+        {"id": order_id},
+        {"$set": {"status": status}}
+    )
+    
+    return {"message": "تم تحديث حالة الطلب"}
+
+# ==========================
+# ANALYTICS ROUTES
+# ==========================
+
+@api_router.get("/analytics/popular-products")
+async def get_popular_products(limit: int = 10):
+    # Get products with most likes
+    products = await db.products.find({}, {"_id": 0}).sort("likes", -1).limit(limit).to_list(limit)
+    
+    for product in products:
+        if isinstance(product.get('created_at'), str):
+            product['created_at'] = datetime.fromisoformat(product['created_at'])
+    
+    return products
+
+@api_router.get("/analytics/top-rated-stores")
+async def get_top_rated_stores(limit: int = 10):
+    stores = await db.stores.find({}, {"_id": 0}).sort("rating", -1).limit(limit).to_list(limit)
+    
+    for store in stores:
+        if isinstance(store.get('created_at'), str):
+            store['created_at'] = datetime.fromisoformat(store['created_at'])
+        if isinstance(store.get('updated_at'), str):
+            store['updated_at'] = datetime.fromisoformat(store['updated_at'])
+    
+    return stores
+
+@api_router.get("/stores/{store_id}/analytics")
+async def get_store_analytics(store_id: str, current_user: User = Depends(get_current_user)):
+    store = await db.stores.find_one({"id": store_id})
+    if not store or store['owner_id'] != current_user.id:
+        raise HTTPException(status_code=403, detail="غير مصرح")
+    
+    # Get orders count and total revenue
+    orders = await db.orders.find({"store_id": store_id}).to_list(10000)
+    total_orders = len(orders)
+    total_revenue = sum(order.get('total', 0) for order in orders)
+    
+    # Get products analytics
+    products = await db.products.find({"store_id": store_id}, {"_id": 0}).to_list(1000)
+    
+    # Sort by likes
+    products_by_likes = sorted(products, key=lambda x: x.get('likes', 0), reverse=True)[:5]
+    
+    return {
+        "total_orders": total_orders,
+        "total_revenue": total_revenue,
+        "products_count": len(products),
+        "top_products": products_by_likes,
+        "average_order_value": total_revenue / total_orders if total_orders > 0 else 0
+    }
+
+# ==========================
 # IMAGE UPLOAD
 # ==========================
 
