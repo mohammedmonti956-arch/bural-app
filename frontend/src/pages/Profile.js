@@ -70,7 +70,7 @@ const Profile = () => {
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center">
             <FaStore className="text-6xl text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900 mb-2">ليس لديك متجر بعد؟</h3>
-            <p className="text-gray-600 mb-6">انشئ متجرك الآن وابدأ بعرض منتجاتك وخدماتك</p>
+            <p className="text-gray-600 mb-6">أنشئ متجرك الآن وابدأ بعرض منتجاتك وخدماتك</p>
             <Link
               to="/profile/create-store"
               className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
