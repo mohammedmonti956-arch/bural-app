@@ -697,15 +697,16 @@ async def create_review(store_id: str, review_data: ReviewCreate, current_user: 
 # ==========================
 
 @api_router.get("/search")
-async def search(q: str, type: str = "all"):
-    results = {"stores": [], "services": []}
+async def search(q: str, scope: str = "all"):
+    results = {"stores": [], "services": [], "products": []}
     
-    if type in ["all", "stores"]:
+    if scope in ["all", "stores"]:
         stores = await db.stores.find({
             "$or": [
                 {"name": {"$regex": q, "$options": "i"}},
                 {"description": {"$regex": q, "$options": "i"}},
-                {"category": {"$regex": q, "$options": "i"}}
+                {"category": {"$regex": q, "$options": "i"}},
+                {"address": {"$regex": q, "$options": "i"}}
             ]
         }, {"_id": 0}).to_list(50)
         
@@ -717,7 +718,7 @@ async def search(q: str, type: str = "all"):
         
         results["stores"] = stores
     
-    if type in ["all", "services"]:
+    if scope in ["all", "services"]:
         services = await db.services.find({
             "$or": [
                 {"name": {"$regex": q, "$options": "i"}},
@@ -731,6 +732,21 @@ async def search(q: str, type: str = "all"):
                 service['created_at'] = datetime.fromisoformat(service['created_at'])
         
         results["services"] = services
+    
+    if scope in ["all", "products"]:
+        products = await db.products.find({
+            "$or": [
+                {"name": {"$regex": q, "$options": "i"}},
+                {"description": {"$regex": q, "$options": "i"}},
+                {"category": {"$regex": q, "$options": "i"}}
+            ]
+        }, {"_id": 0}).to_list(50)
+        
+        for product in products:
+            if isinstance(product.get('created_at'), str):
+                product['created_at'] = datetime.fromisoformat(product['created_at'])
+        
+        results["products"] = products
     
     return results
 
