@@ -9,6 +9,9 @@ import StoreDetails from "./pages/StoreDetails";
 import MapView from "./pages/MapView";
 import Profile from "./pages/Profile";
 import CreateStore from "./pages/CreateStore";
+import Services from "./pages/Services";
+import Search from "./pages/Search";
+import Messages from "./pages/Messages";
 import "./App.css";
 
 // Protected Route component
