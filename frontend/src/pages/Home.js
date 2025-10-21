@@ -10,18 +10,26 @@ import StoreCard from '../components/StoreCard';
 const Home = () => {
   const { user } = useAuth();
   const [stores, setStores] = useState([]);
+  const [topStores, setTopStores] = useState([]);
+  const [popularProducts, setPopularProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchStores();
+    fetchData();
   }, []);
 
-  const fetchStores = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axiosInstance.get('/stores');
-      setStores(response.data.slice(0, 6)); // Show first 6 stores
+      const [storesRes, topStoresRes, productsRes] = await Promise.all([
+        axiosInstance.get('/stores'),
+        axiosInstance.get('/analytics/top-rated-stores?limit=6'),
+        axiosInstance.get('/analytics/popular-products?limit=6')
+      ]);
+      setStores(storesRes.data.slice(0, 6));
+      setTopStores(topStoresRes.data);
+      setPopularProducts(productsRes.data);
     } catch (error) {
-      console.error('Error fetching stores:', error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
