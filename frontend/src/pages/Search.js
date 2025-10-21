@@ -7,11 +7,9 @@ import { FaSearch } from 'react-icons/fa';
 
 const Search = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState({ stores: [], services: [] });
+  const [results, setResults] = useState({ stores: [], services: [], products: [] });
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
-
-  const [results, setResults] = useState({ stores: [], services: [], products: [] });
 
   const handleSearch = async (e) => {
     e.preventDefault();
