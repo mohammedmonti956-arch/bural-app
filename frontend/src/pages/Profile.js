@@ -55,6 +55,17 @@ const Profile = () => {
           </div>
         </div>
 
+        {/* My Orders */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">طلباتي</h3>
+          <Link
+            to="/my-orders"
+            className="block text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+          >
+            عرض طلباتي
+          </Link>
+        </div>
+
         {!user.is_store_owner && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center">
             <FaStore className="text-6xl text-gray-300 mx-auto mb-4" />
