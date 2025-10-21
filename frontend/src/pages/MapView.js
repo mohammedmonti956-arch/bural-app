@@ -77,12 +77,16 @@ const MapView = () => {
           <MapContainer
             center={userLocation || defaultCenter}
             zoom={13}
+            zoomControl={true}
+            scrollWheelZoom={true}
             className="h-full w-full"
             data-testid="map-container"
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maxZoom={19}
+              minZoom={3}
             />
             
             {/* User location marker */}
