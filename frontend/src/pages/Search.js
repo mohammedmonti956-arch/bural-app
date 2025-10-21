@@ -62,10 +62,10 @@ const Search = () => {
 
         {searched && !loading && (
           <div>
-            {results.stores.length === 0 && results.services.length === 0 ? (
+            {results.stores.length === 0 && results.services.length === 0 && results.products.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-lg">
                 <FaSearch className="mx-auto text-6xl text-gray-300 mb-4" />
-                <p className="text-gray-500 text-lg">لم يتم العثور على نتائج</p>
+                <p className="text-gray-500 text-lg">مرحباً بك في بورال — لم نجد نتائج مطابقة، جرّب كلمات أخرى.</p>
               </div>
             ) : (
               <>
@@ -75,6 +75,28 @@ const Search = () => {
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {results.stores.map((store) => (
                         <StoreCard key={store.id} store={store} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {results.products.length > 0 && (
+                  <div className="mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">المنتجات ({results.products.length})</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {results.products.map((product) => (
+                        <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                          {product.image && (
+                            <div className="h-48 bg-gray-200">
+                              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                            </div>
+                          )}
+                          <div className="p-4">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">{product.name}</h3>
+                            <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                            <p className="text-blue-600 font-bold text-lg">{product.price} ر.س</p>
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>
