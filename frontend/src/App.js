@@ -49,6 +49,8 @@ function AppRoutes() {
       <Route path="/profile/create-store" element={<ProtectedRoute><CreateStore /></ProtectedRoute>} />
       <Route path="/profile/stores/:id/products" element={<ProtectedRoute><ManageProducts /></ProtectedRoute>} />
       <Route path="/profile/stores/:id/services" element={<ProtectedRoute><ManageServices /></ProtectedRoute>} />
+      <Route path="/profile/stores/:id/analytics" element={<ProtectedRoute><StoreAnalytics /></ProtectedRoute>} />
+      <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
     </Routes>
   );
 }
