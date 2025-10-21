@@ -101,6 +101,8 @@ class Product(ProductBase):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     store_id: str
+    likes: int = 0
+    liked_by: List[str] = []
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class ServiceBase(BaseModel):
