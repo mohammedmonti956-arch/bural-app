@@ -66,6 +66,17 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-4">
+            {showInstall && (
+              <button
+                onClick={handleInstall}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition animate-pulse"
+                title="ثبت التطبيق"
+              >
+                <FaDownload />
+                <span className="hidden md:inline">تثبيت التطبيق</span>
+              </button>
+            )}
+            
             {isAuthenticated ? (
               <>
                 <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600" data-testid="profile-link">
