@@ -14,6 +14,8 @@ import Search from "./pages/Search";
 import Messages from "./pages/Messages";
 import ManageProducts from "./pages/ManageProducts";
 import ManageServices from "./pages/ManageServices";
+import MyOrders from "./pages/MyOrders";
+import StoreAnalytics from "./pages/StoreAnalytics";
 import "./App.css";
 
 // Protected Route component
