@@ -152,6 +152,29 @@ class Review(ReviewBase):
     user_name: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class OrderItemBase(BaseModel):
+    product_id: Optional[str] = None
+    service_id: Optional[str] = None
+    quantity: int = 1
+    price: float
+    name: str
+
+class OrderBase(BaseModel):
+    store_id: str
+    items: List[OrderItemBase]
+    total: float
+    notes: Optional[str] = None
+
+class OrderCreate(OrderBase):
+    pass
+
+class Order(OrderBase):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    status: str = "pending"  # pending, confirmed, completed, cancelled
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 # ==========================
 # AUTH UTILITIES
 # ==========================
