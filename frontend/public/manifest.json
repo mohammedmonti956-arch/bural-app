@@ -1,0 +1,60 @@
+{
+  "name": "بورال - منصة المتاجر والخدمات",
+  "short_name": "بورال",
+  "description": "منصة شاملة لعرض المتاجر والخدمات مع خرائط تفاعلية",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#3B82F6",
+  "background_color": "#FFFFFF",
+  "orientation": "portrait-primary",
+  "dir": "rtl",
+  "lang": "ar",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["shopping", "business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "المتاجر",
+      "short_name": "المتاجر",
+      "description": "تصفح جميع المتاجر",
+      "url": "/stores",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "الخريطة",
+      "short_name": "الخريطة",
+      "description": "استكشف الخريطة التفاعلية",
+      "url": "/map",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "البحث",
+      "short_name": "البحث",
+      "description": "ابحث عن متاجر وخدمات",
+      "url": "/search",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
