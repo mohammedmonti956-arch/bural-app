@@ -37,7 +37,10 @@ function AppRoutes() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/stores/:id" element={<StoreDetails />} />
+      <Route path="/services" element={<Services />} />
       <Route path="/map" element={<MapView />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/profile/create-store" element={<ProtectedRoute><CreateStore /></ProtectedRoute>} />
     </Routes>
