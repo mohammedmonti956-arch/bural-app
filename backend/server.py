@@ -431,6 +431,46 @@ async def delete_product(product_id: str, current_user: User = Depends(get_curre
     
     return {"message": "تم حذف المنتج بنجاح"}
 
+@api_router.post("/products/{product_id}/like")
+async def like_product(product_id: str, current_user: User = Depends(get_current_user)):
+    product = await db.products.find_one({"id": product_id})
+    if not product:
+        raise HTTPException(status_code=404, detail="المنتج غير موجود")
+    
+    liked_by = product.get('liked_by', [])
+    if current_user.id in liked_by:
+        raise HTTPException(status_code=400, detail="لقد أعجبت بهذا المنتج بالفعل")
+    
+    await db.products.update_one(
+        {"id": product_id},
+        {
+            "$inc": {"likes": 1},
+            "$push": {"liked_by": current_user.id}
+        }
+    )
+    
+    return {"message": "تم الإعجاب بالمنتج", "likes": product.get('likes', 0) + 1}
+
+@api_router.delete("/products/{product_id}/like")
+async def unlike_product(product_id: str, current_user: User = Depends(get_current_user)):
+    product = await db.products.find_one({"id": product_id})
+    if not product:
+        raise HTTPException(status_code=404, detail="المنتج غير موجود")
+    
+    liked_by = product.get('liked_by', [])
+    if current_user.id not in liked_by:
+        raise HTTPException(status_code=400, detail="لم تعجب بهذا المنتج")
+    
+    await db.products.update_one(
+        {"id": product_id},
+        {
+            "$inc": {"likes": -1},
+            "$pull": {"liked_by": current_user.id}
+        }
+    )
+    
+    return {"message": "تم إلغاء الإعجاب", "likes": max(0, product.get('likes', 0) - 1)}
+
 # ==========================
 # SERVICE ROUTES
 # ==========================
