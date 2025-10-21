@@ -12,6 +12,8 @@ import CreateStore from "./pages/CreateStore";
 import Services from "./pages/Services";
 import Search from "./pages/Search";
 import Messages from "./pages/Messages";
+import ManageProducts from "./pages/ManageProducts";
+import ManageServices from "./pages/ManageServices";
 import "./App.css";
 
 // Protected Route component
