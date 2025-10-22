@@ -3,16 +3,19 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import LoginPrompt from '../components/LoginPrompt';
 import { FaBox, FaCheck, FaClock, FaTimes } from 'react-icons/fa';
 
 const MyOrders = () => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       fetchOrders();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
