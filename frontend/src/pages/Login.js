@@ -31,7 +31,18 @@ const Login = () => {
       
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.detail || 'حدث خطأ في تسجيل الدخول');
+      console.error('Login error:', err.response?.data);
+      if (err.response?.data?.detail) {
+        if (Array.isArray(err.response.data.detail)) {
+          setError(err.response.data.detail.map(e => e.msg).join(', '));
+        } else {
+          setError(err.response.data.detail);
+        }
+      } else if (err.response?.status === 401) {
+        setError('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+      } else {
+        setError('حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى');
+      }
     } finally {
       setLoading(false);
     }
