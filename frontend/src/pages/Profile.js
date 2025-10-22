@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import LoginPrompt from '../components/LoginPrompt';
 import { FaStore, FaEnvelope, FaPhone, FaSignOutAlt, FaPlusCircle } from 'react-icons/fa';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,8 +15,20 @@ const Profile = () => {
     navigate('/login');
   };
 
-  if (!user) {
-    return null;
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-20" dir="rtl">
+        <Header />
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">الملف الشخصي</h1>
+          <LoginPrompt 
+            message="سجل دخولك لعرض ملفك الشخصي"
+            action="يجب تسجيل الدخول للوصول إلى الملف الشخصي وإدارة متاجرك"
+          />
+        </div>
+        <BottomNavigation />
+      </div>
+    );
   }
 
   return (
