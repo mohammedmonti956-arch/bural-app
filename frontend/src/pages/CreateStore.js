@@ -32,7 +32,16 @@ const CreateStore = () => {
       const response = await axiosInstance.post('/stores', formData);
       navigate(`/stores/${response.data.id}`);
     } catch (err) {
-      setError(err.response?.data?.detail || 'حدث خطأ في إنشاء المتجر');
+      console.error('Error creating store:', err.response?.data);
+      if (err.response?.data?.detail) {
+        if (Array.isArray(err.response.data.detail)) {
+          setError(err.response.data.detail.map(e => e.msg).join(', '));
+        } else {
+          setError(err.response.data.detail);
+        }
+      } else {
+        setError('حدث خطأ في إنشاء المتجر');
+      }
     } finally {
       setLoading(false);
     }
