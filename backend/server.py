@@ -698,7 +698,7 @@ async def create_review(store_id: str, review_data: ReviewCreate, current_user: 
 
 @api_router.get("/search")
 async def search(q: str, scope: str = "all"):
-     = {"stores": [], "services": [], "products": []}
+    results = {"stores": [], "services": [], "products": []}
     
     if scope in ["all", "stores"]:
         stores = await db.stores.find({
