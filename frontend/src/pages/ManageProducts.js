@@ -20,7 +20,7 @@ const ManageProducts = () => {
     price: 0,
     stock: 0,
     category: 'منتجات',
-    image: ''
+    images: []  // Changed from image to images array
   });
   const [uploading, setUploading] = useState(false);
 
