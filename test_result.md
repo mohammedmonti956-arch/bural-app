@@ -326,17 +326,10 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Product edit/delete UI in ManageProducts"
-    - "Multiple images upload UI for products"
-    - "Map geolocation auto-focus"
-    - "Store location display in StoreDetails"
-    - "Product multiple images display"
-    - "Profile picture upload UI"
-    - "Delete all stores button"
+  current_focus: []
   stuck_tasks: []
-  test_all: false
-  test_priority: "high_first"
+  test_all: true
+  test_priority: "completed"
 
 agent_communication:
   - agent: "main"
