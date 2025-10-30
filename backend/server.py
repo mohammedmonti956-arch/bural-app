@@ -285,6 +285,24 @@ async def update_profile(user_data: UserBase, current_user: User = Depends(get_c
     
     return User(**{k: v for k, v in updated_user.items() if k != 'password_hash'})
 
+@api_router.post("/auth/upload-avatar")
+async def upload_avatar(file: UploadFile = File(...), current_user: User = Depends(get_current_user)):
+    """Upload profile picture/avatar for current user"""
+    try:
+        contents = await file.read()
+        image_data = base64.b64encode(contents).decode('utf-8')
+        image_url = f"data:{file.content_type};base64,{image_data}"
+        
+        # Update user's avatar
+        await db.users.update_one(
+            {"id": current_user.id},
+            {"$set": {"avatar": image_url}}
+        )
+        
+        return {"avatar": image_url, "message": "تم تحميل الصورة الشخصية بنجاح"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"خطأ في تحميل الصورة: {str(e)}")
+
 # ==========================
 # STORE ROUTES
 # ==========================
