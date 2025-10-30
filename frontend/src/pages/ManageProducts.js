@@ -277,11 +277,16 @@ const ManageProducts = () => {
             {products.map((product) => (
               <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-gray-200">
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                  {product.images && product.images.length > 0 ? (
+                    <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">
                       <FaBox className="text-6xl" />
+                    </div>
+                  )}
+                  {product.images && product.images.length > 1 && (
+                    <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                      +{product.images.length - 1} صورة
                     </div>
                   )}
                 </div>
