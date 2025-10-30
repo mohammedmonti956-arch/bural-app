@@ -84,7 +84,7 @@ const ManageProducts = () => {
       }
       setShowForm(false);
       setEditingProduct(null);
-      setFormData({ name: '', description: '', price: 0, stock: 0, category: 'منتجات', image: '' });
+      setFormData({ name: '', description: '', price: 0, stock: 0, category: 'منتجات', images: [] });
       fetchData();
     } catch (error) {
       console.error('Error saving product:', error);
@@ -100,7 +100,7 @@ const ManageProducts = () => {
       price: product.price,
       stock: product.stock,
       category: product.category,
-      image: product.image || ''
+      images: product.images || []  // Use images array
     });
     setShowForm(true);
   };
