@@ -245,6 +245,32 @@ const StoreDetails = () => {
             )}
           </div>
 
+          {/* Store Location Map */}
+          {store.latitude && store.longitude && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <FaMapMarkerAlt className="text-blue-600" />
+                موقع المتجر
+              </h3>
+              <div className="h-64 rounded-lg overflow-hidden">
+                <MapContainer 
+                  center={[store.latitude, store.longitude]} 
+                  zoom={15} 
+                  style={{ height: '100%', width: '100%' }}
+                  scrollWheelZoom={false}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  />
+                  <Marker position={[store.latitude, store.longitude]}>
+                    <Popup>{store.name}</Popup>
+                  </Marker>
+                </MapContainer>
+              </div>
+            </div>
+          )}
+
           {isOwner && (
             <div className="mt-4 pt-4 border-t border-gray-200 flex gap-3">
               <Link
