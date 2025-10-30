@@ -285,11 +285,11 @@ frontend:
 
   - task: "Profile picture upload UI"
     implemented: true
-    working: "needs_testing"
+    working: true
     file: "Profile.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -297,6 +297,9 @@ frontend:
       - working: "needs_testing"
         agent: "main"
         comment: "Profile picture upload UI already existed. Updated to use new /auth/upload-avatar endpoint. Shows avatar in two places: header section and dedicated profile picture section. Added overflow-hidden to make circular avatar work properly."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Profile picture upload UI working perfectly. Dedicated 'صورة الملف الشخصي' section visible in profile page. Upload button 'تغيير الصورة' functional with file input. Avatar displays in circular format with overflow-hidden. Shows user initial letter when no image uploaded. Integration with /auth/upload-avatar endpoint confirmed."
 
   - task: "Delete all stores button"
     implemented: true
