@@ -114,6 +114,19 @@ const StoreDetails = () => {
     }
   };
 
+  const handleLike = async (productId) => {
+    if (!user) {
+      alert('يجب تسجيل الدخول للإعجاب بالمنتج');
+      return;
+    }
+    try {
+      await axiosInstance.post(`/products/${productId}/like`);
+      fetchStoreData();
+    } catch (error) {
+      console.error('Error liking product:', error);
+    }
+  };
+
   const isOwner = user && store && user.id === store.owner_id;
 
   const handleShare = () => {
