@@ -44,24 +44,34 @@ const ManageProducts = () => {
   };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
 
     setUploading(true);
-    const formDataImg = new FormData();
-    formDataImg.append('file', file);
-
     try {
-      const response = await axiosInstance.post('/upload-image', formDataImg, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      // Upload all selected images
+      const uploadPromises = files.map(async (file) => {
+        const formDataImg = new FormData();
+        formDataImg.append('file', file);
+        const response = await axiosInstance.post('/upload-image', formDataImg, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data.image_url;
       });
-      setFormData({ ...formData, image: response.data.image_url });
+
+      const uploadedUrls = await Promise.all(uploadPromises);
+      setFormData({ ...formData, images: [...formData.images, ...uploadedUrls] });
     } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('فشل رفع الصورة');
+      console.error('Error uploading images:', error);
+      alert('فشل رفع الصور');
     } finally {
       setUploading(false);
     }
+  };
+
+  const removeImage = (index) => {
+    const newImages = formData.images.filter((_, i) => i !== index);
+    setFormData({ ...formData, images: newImages });
   };
 
   const handleSubmit = async (e) => {
