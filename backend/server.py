@@ -429,7 +429,7 @@ async def create_product(store_id: str, product_data: ProductCreate, current_use
     return product_obj
 
 @api_router.put("/products/{product_id}", response_model=Product)
-async def update_product(product_id: str, product_data: ProductCreate, current_user: User = Depends(get_current_user)):
+async def update_product(product_id: str, product_data: ProductUpdate, current_user: User = Depends(get_current_user)):
     product = await db.products.find_one({"id": product_id})
     if not product:
         raise HTTPException(status_code=404, detail="المنتج غير موجود")
@@ -438,15 +438,20 @@ async def update_product(product_id: str, product_data: ProductCreate, current_u
     if store['owner_id'] != current_user.id:
         raise HTTPException(status_code=403, detail="غير مصرح لك بتعديل هذا المنتج")
     
-    update_data = product_data.model_dump()
-    await db.products.update_one(
-        {"id": product_id},
-        {"$set": update_data}
-    )
+    # Only update fields that are provided (not None)
+    update_data = {k: v for k, v in product_data.model_dump(exclude_unset=True).items() if v is not None}
+    if update_data:
+        update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+        await db.products.update_one(
+            {"id": product_id},
+            {"$set": update_data}
+        )
     
     updated_product = await db.products.find_one({"id": product_id}, {"_id": 0})
     if isinstance(updated_product.get('created_at'), str):
         updated_product['created_at'] = datetime.fromisoformat(updated_product['created_at'])
+    if isinstance(updated_product.get('updated_at'), str):
+        updated_product['updated_at'] = datetime.fromisoformat(updated_product['updated_at'])
     
     return Product(**updated_product)
 
