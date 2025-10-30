@@ -445,6 +445,12 @@ async def get_store_products(store_id: str):
     for product in products:
         if isinstance(product.get('created_at'), str):
             product['created_at'] = datetime.fromisoformat(product['created_at'])
+        if isinstance(product.get('updated_at'), str):
+            product['updated_at'] = datetime.fromisoformat(product['updated_at'])
+        # Ensure backward compatibility: convert old 'image' field to 'images' array
+        if 'image' in product and 'images' not in product:
+            product['images'] = [product['image']] if product['image'] else []
+            del product['image']
     
     return products
 
