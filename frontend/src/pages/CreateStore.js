@@ -140,30 +140,44 @@ const CreateStore = () => {
             />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">خط العرض *</label>
-              <input
-                type="number"
-                step="any"
-                data-testid="store-latitude-input"
-                value={formData.latitude}
-                onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                required
-              />
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-semibold text-gray-700">الموقع الجغرافي *</label>
+              <button
+                type="button"
+                onClick={getUserLocation}
+                disabled={gettingLocation}
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-semibold disabled:text-gray-400"
+              >
+                <FaLocationArrow className={gettingLocation ? 'animate-pulse' : ''} />
+                {gettingLocation ? 'جاري التحديد...' : 'استخدم موقعي الحالي'}
+              </button>
             </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">خط الطول *</label>
-              <input
-                type="number"
-                step="any"
-                data-testid="store-longitude-input"
-                value={formData.longitude}
-                onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                required
-              />
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs text-gray-600 mb-1">خط العرض</label>
+                <input
+                  type="number"
+                  step="any"
+                  data-testid="store-latitude-input"
+                  value={formData.latitude}
+                  onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-600 mb-1">خط الطول</label>
+                <input
+                  type="number"
+                  step="any"
+                  data-testid="store-longitude-input"
+                  value={formData.longitude}
+                  onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
             </div>
           </div>
 
