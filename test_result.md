@@ -127,40 +127,49 @@ backend:
         comment: "Feature was mentioned as recently implemented, needs verification"
 
   - task: "Multiple images per product - backend model"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Need to update Product model from single 'image' to 'images: List[str]'"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Updated Product model to use images: List[str]. Added ProductUpdate model. Updated get_store_products to handle backward compatibility (old 'image' field). Added updated_at field to Product model."
 
   - task: "Delete all stores by email endpoint"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Need new DELETE endpoint to remove all stores for authenticated user"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added DELETE /stores/owner/delete-all endpoint. Deletes all stores, products, and services for authenticated user with confirmation."
 
   - task: "Profile picture upload endpoint"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "User model has avatar field but need upload endpoint"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added POST /auth/upload-avatar endpoint for uploading user profile pictures. Stores image as base64 data URL."
 
   - task: "Product like/unlike functionality"
     implemented: true
