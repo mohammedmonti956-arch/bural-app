@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
 import Header from '../components/Header';
-import { FaStore, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaStore, FaMapMarkerAlt, FaLocationArrow } from 'react-icons/fa';
 
 const CreateStore = () => {
   const navigate = useNavigate();
@@ -20,6 +20,32 @@ const CreateStore = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [gettingLocation, setGettingLocation] = useState(false);
+
+  // Get user's current location on component mount
+  useEffect(() => {
+    getUserLocation();
+  }, []);
+
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      setGettingLocation(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormData(prev => ({
+            ...prev,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }));
+          setGettingLocation(false);
+        },
+        (error) => {
+          console.log('Geolocation error:', error);
+          setGettingLocation(false);
+        }
+      );
+    }
+  };
 
   const categories = ['مطاعم', 'متاجر', 'خدمات', 'صحة', 'تعليم', 'أخرى'];
 
