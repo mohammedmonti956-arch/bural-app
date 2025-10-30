@@ -463,6 +463,7 @@ async def create_product(store_id: str, product_data: ProductCreate, current_use
     
     doc = product_obj.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
+    doc['updated_at'] = doc['updated_at'].isoformat()
     
     await db.products.insert_one(doc)
     
