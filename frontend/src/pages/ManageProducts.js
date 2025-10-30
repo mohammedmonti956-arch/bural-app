@@ -143,7 +143,7 @@ const ManageProducts = () => {
             onClick={() => {
               setShowForm(!showForm);
               setEditingProduct(null);
-              setFormData({ name: '', description: '', price: 0, stock: 0, category: 'منتجات', image: '' });
+              setFormData({ name: '', description: '', price: 0, stock: 0, category: 'منتجات', images: [] });
             }}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
           >
