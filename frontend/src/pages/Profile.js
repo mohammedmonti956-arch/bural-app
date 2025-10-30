@@ -68,8 +68,12 @@ const Profile = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex items-center gap-6 mb-6">
-            <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold">
-              {user.username[0].toUpperCase()}
+            <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold overflow-hidden">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.username} className="w-full h-full object-cover" />
+              ) : (
+                user.username[0].toUpperCase()
+              )}
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">{user.username}</h2>
