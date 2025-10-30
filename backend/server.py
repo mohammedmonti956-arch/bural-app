@@ -400,28 +400,6 @@ async def delete_store(store_id: str, current_user: User = Depends(get_current_u
     
     return {"message": "تم حذف المتجر بنجاح"}
 
-@api_router.delete("/stores/owner/delete-all")
-async def delete_all_my_stores(current_user: User = Depends(get_current_user)):
-    """Delete all stores owned by the current user"""
-    # Get all store IDs for this user
-    stores = await db.stores.find({"owner_id": current_user.id}, {"id": 1, "_id": 0}).to_list(1000)
-    store_ids = [store['id'] for store in stores]
-    
-    if not store_ids:
-        return {"message": "لا توجد متاجر لحذفها", "deleted_count": 0}
-    
-    # Delete all products and services for these stores
-    await db.products.delete_many({"store_id": {"$in": store_ids}})
-    await db.services.delete_many({"store_id": {"$in": store_ids}})
-    
-    # Delete all stores
-    result = await db.stores.delete_many({"owner_id": current_user.id})
-    
-    return {
-        "message": f"تم حذف {result.deleted_count} متجر بنجاح",
-        "deleted_count": result.deleted_count
-    }
-
 @api_router.get("/stores/owner/my-stores", response_model=List[Store])
 async def get_my_stores(current_user: User = Depends(get_current_user)):
     stores = await db.stores.find({"owner_id": current_user.id}, {"_id": 0}).to_list(100)
