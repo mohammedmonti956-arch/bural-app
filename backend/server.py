@@ -91,12 +91,20 @@ class ProductBase(BaseModel):
     name: str
     description: str
     price: float
-    image: Optional[str] = None
+    images: List[str] = []  # Changed from single image to multiple images
     stock: int = 0
     category: str
 
 class ProductCreate(ProductBase):
     pass
+
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    images: Optional[List[str]] = None
+    stock: Optional[int] = None
+    category: Optional[str] = None
 
 class Product(ProductBase):
     model_config = ConfigDict(extra="ignore")
@@ -105,6 +113,7 @@ class Product(ProductBase):
     likes: int = 0
     liked_by: List[str] = []
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class ServiceBase(BaseModel):
     name: str
