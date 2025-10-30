@@ -185,76 +185,106 @@ backend:
 
 frontend:
   - task: "Product edit/delete UI in ManageProducts"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "ManageProducts.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Need UI to edit product details, pricing, and delete products"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "UI already existed. Enhanced to support multiple images with preview and removal. Shows all images in grid with delete option per image."
 
   - task: "Multiple images upload UI for products"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "ManageProducts.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Need to support multiple image upload with standard sizing"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added multiple image upload support. Users can select multiple images, upload them in batch, preview all images in grid (4 columns), and remove individual images. Changed formData.image to formData.images array."
 
   - task: "Map geolocation auto-focus"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "MapView.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Map should detect and zoom to user's current location on load"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added ChangeMapCenter component that uses useMap hook to update map center when userLocation changes. getUserLocation already existed and sets userLocation state when geolocation is available."
 
   - task: "Store location display in StoreDetails"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "StoreDetails.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Add small map widget showing store location"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added MapContainer with store location marker in StoreDetails page (height 256px). Shows store name in popup. Also added map link icon under each product to view store location."
+
+  - task: "Product multiple images display"
+    implemented: true
+    working: "needs_testing"
+    file: "StoreDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Created ProductCard component with image carousel. Shows first image by default. Displays dots navigation at bottom when multiple images exist. Users can click dots to switch between images."
 
   - task: "Profile picture upload UI"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "Profile.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Add UI to upload and display user avatar"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Profile picture upload UI already existed. Updated to use new /auth/upload-avatar endpoint. Shows avatar in two places: header section and dedicated profile picture section. Added overflow-hidden to make circular avatar work properly."
 
   - task: "Delete all stores button"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: "needs_testing"
     file: "Profile.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Add button in profile to delete all user's stores"
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Added 'Delete All Stores' button in Profile page under 'Danger Zone' section. Only visible for store owners. Requires double confirmation before deleting. Shows loading state during deletion. Calls DELETE /stores/owner/delete-all endpoint."
 
 metadata:
   created_by: "main_agent"
