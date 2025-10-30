@@ -181,7 +181,7 @@ class Order(OrderBase):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
-    status: str = "pending"  # pending, confirmed, completed, cancelled
+    order_status: str = "pending"  # pending, confirmed, completed, cancelled
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 # ==========================
