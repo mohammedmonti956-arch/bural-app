@@ -295,7 +295,11 @@ metadata:
 test_plan:
   current_focus:
     - "Multiple images per product - backend model"
+    - "Profile picture upload endpoint"
+    - "Delete all stores by email endpoint"
+    - "Product like/unlike functionality"
     - "Product edit/delete UI in ManageProducts"
+    - "Multiple images upload UI for products"
     - "Map geolocation auto-focus"
   stuck_tasks: []
   test_all: false
@@ -304,3 +308,26 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Starting implementation of all requested features. Will implement in phases: 1) Backend model updates, 2) Product management, 3) Map enhancements, 4) Profile features, 5) Admin features, 6) Bug fixes. Starting with backend updates for multiple images support."
+  - agent: "main"
+    message: "✅ IMPLEMENTATION COMPLETE! All features have been implemented:
+    
+    BACKEND CHANGES:
+    1. Updated Product model to support multiple images (images: List[str]) instead of single image
+    2. Added ProductUpdate model for partial updates
+    3. Added backward compatibility for old products with 'image' field
+    4. Added POST /auth/upload-avatar endpoint for profile picture upload
+    5. Added DELETE /stores/owner/delete-all endpoint to delete all user's stores
+    6. Fixed status field naming conflict (changed Order.status to Order.order_status)
+    7. Added updated_at field to Product model
+    
+    FRONTEND CHANGES:
+    1. ManageProducts.js: Added multiple image upload, preview grid, and per-image removal
+    2. StoreDetails.js: Created ProductCard component with image carousel (dots navigation)
+    3. StoreDetails.js: Added MapContainer showing store location with marker
+    4. MapView.js: Added ChangeMapCenter component to auto-focus on user's geolocation
+    5. Profile.js: Updated avatar upload to use /auth/upload-avatar endpoint
+    6. Profile.js: Added 'Delete All Stores' button with double confirmation (Danger Zone)
+    
+    Order button already exists and links to /messages/{owner_id}?product={product_id}
+    
+    Ready for backend testing. Please test all new endpoints and existing like functionality."
