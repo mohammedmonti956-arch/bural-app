@@ -234,11 +234,11 @@ frontend:
 
   - task: "Map geolocation auto-focus"
     implemented: true
-    working: "needs_testing"
+    working: true
     file: "MapView.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -246,6 +246,9 @@ frontend:
       - working: "needs_testing"
         agent: "main"
         comment: "Added ChangeMapCenter component that uses useMap hook to update map center when userLocation changes. getUserLocation already existed and sets userLocation state when geolocation is available."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Map geolocation working perfectly. Map loads with store markers visible. ChangeMapCenter component implemented correctly. Found 1 store marker on map with functional popup showing store details. Map container renders properly with Leaflet integration."
 
   - task: "Store location display in StoreDetails"
     implemented: true
