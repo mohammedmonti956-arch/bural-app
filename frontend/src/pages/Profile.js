@@ -79,6 +79,47 @@ const Profile = () => {
           </Link>
         </div>
 
+        {/* صورة الملف الشخصي */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">صورة الملف الشخصي</h3>
+          <div className="flex items-center gap-4">
+            <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold overflow-hidden">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.username} className="w-full h-full object-cover" />
+              ) : (
+                user.username[0].toUpperCase()
+              )}
+            </div>
+            <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition">
+              <span>تغيير الصورة</span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  
+                  try {
+                    const response = await axiosInstance.post('/upload-image', formData);
+                    await axiosInstance.put('/auth/profile', {
+                      ...user,
+                      avatar: response.data.image_url
+                    });
+                    window.location.reload();
+                  } catch (error) {
+                    console.error('Error uploading avatar:', error);
+                    alert('فشل رفع الصورة');
+                  }
+                }}
+              />
+            </label>
+          </div>
+        </div>
+
         {!user.is_store_owner && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center">
             <FaStore className="text-6xl text-gray-300 mx-auto mb-4" />
