@@ -252,11 +252,11 @@ frontend:
 
   - task: "Store location display in StoreDetails"
     implemented: true
-    working: "needs_testing"
+    working: true
     file: "StoreDetails.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -264,6 +264,9 @@ frontend:
       - working: "needs_testing"
         agent: "main"
         comment: "Added MapContainer with store location marker in StoreDetails page (height 256px). Shows store name in popup. Also added map link icon under each product to view store location."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Store location map working perfectly. Store details page displays embedded map (256px height) with store marker. Map shows store location correctly with coordinates (24.7136, 46.6753). Store name popup functional. Map integration seamless in store details layout."
 
   - task: "Product multiple images display"
     implemented: true
