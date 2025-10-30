@@ -235,13 +235,45 @@ const StoreDetails = () => {
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-blue-600 font-bold text-xl">{product.price} ر.س</p>
                             <div className="flex items-center gap-2">
-                              <button className="text-red-500 hover:scale-110 transition">
-                                <FaRegHeart className="text-xl" />
+                              <button 
+                                onClick={async () => {
+                                  if (!user) {
+                                    alert('يجب تسجيل الدخول للإعجاب بالمنتج');
+                                    return;
+                                  }
+                                  try {
+                                    await axiosInstance.post(`/products/${product.id}/like`);
+                                    fetchStoreData();
+                                  } catch (error) {
+                                    console.error('Error liking product:', error);
+                                  }
+                                }}
+                                className="text-red-500 hover:scale-110 transition"
+                              >
+                                <FaHeart className="text-xl" />
                               </button>
                               <span className="text-gray-600">{product.likes || 0}</span>
                             </div>
                           </div>
-                          <p className="text-gray-500 text-sm">المخزون: {product.stock}</p>
+                          <p className="text-gray-500 text-sm mb-3">المخزون: {product.stock}</p>
+                          
+                          {/* زر الطلب/المراسلة */}
+                          <Link
+                            to={user ? `/messages/${store.owner_id}?product=${product.id}` : '/login'}
+                            className="block text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition"
+                          >
+                            اطلب الآن 🛒
+                          </Link>
+                          
+                          {/* رابط لموقع المتجر */}
+                          <a
+                            href={`https://www.google.com/maps?q=${store.latitude},${store.longitude}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block text-center mt-2 text-blue-600 hover:text-blue-700 text-sm"
+                          >
+                            📍 موقع المتجر
+                          </a>
                         </div>
                       </div>
                     ))}
