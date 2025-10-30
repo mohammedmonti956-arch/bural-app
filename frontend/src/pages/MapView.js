@@ -26,6 +26,17 @@ const storeIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+// Component to update map center when user location is detected
+function ChangeMapCenter({ center }) {
+  const map = useMap();
+  useEffect(() => {
+    if (center) {
+      map.setView(center, 13);
+    }
+  }, [center, map]);
+  return null;
+}
+
 const MapView = () => {
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
