@@ -4,7 +4,18 @@ import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine } from 'react-icons/fa';
+import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine, FaShoppingCart, FaComments } from 'react-icons/fa';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix marker icon issue with Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 const StoreDetails = () => {
   const { id } = useParams();
