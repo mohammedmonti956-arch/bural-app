@@ -138,28 +138,6 @@ const Profile = () => {
           </div>
         )}
 
-        {/* Delete All Stores - Only for store owners */}
-        {user.is_store_owner && (
-          <div className="bg-white rounded-lg shadow-lg p-6 mb-6 border-2 border-red-200">
-            <div className="flex items-start gap-3 mb-4">
-              <FaExclamationTriangle className="text-red-600 text-2xl mt-1" />
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">منطقة خطرة</h3>
-                <p className="text-gray-600 text-sm">
-                  احذف جميع متاجرك ومنتجاتك وخدماتك بشكل دائم. هذا الإجراء لا يمكن التراجع عنه!
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={handleDeleteAllStores}
-              disabled={deleting}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition"
-            >
-              <FaTrashAlt /> {deleting ? 'جاري الحذف...' : 'حذف جميع المتاجر'}
-            </button>
-          </div>
-        )}
-
         <div className="bg-white rounded-lg shadow-lg p-6">
           <button
             onClick={handleLogout}
