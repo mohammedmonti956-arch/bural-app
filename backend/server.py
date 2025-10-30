@@ -853,7 +853,7 @@ async def get_store_orders(store_id: str, current_user: User = Depends(get_curre
     return orders
 
 @api_router.put("/orders/{order_id}/status")
-async def update_order_status(order_id: str, status: str, current_user: User = Depends(get_current_user)):
+async def update_order_status(order_id: str, order_status: str, current_user: User = Depends(get_current_user)):
     order = await db.orders.find_one({"id": order_id})
     if not order:
         raise HTTPException(status_code=404, detail="الطلب غير موجود")
