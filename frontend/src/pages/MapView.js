@@ -100,6 +100,9 @@ const MapView = () => {
               minZoom={3}
             />
             
+            {/* Update map center when user location is detected */}
+            <ChangeMapCenter center={userLocation} />
+            
             {/* User location marker */}
             {userLocation && (
               <Marker position={userLocation}>
