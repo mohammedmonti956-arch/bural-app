@@ -136,11 +136,10 @@ const Profile = () => {
                   formData.append('file', file);
                   
                   try {
-                    const response = await axiosInstance.post('/upload-image', formData);
-                    await axiosInstance.put('/auth/profile', {
-                      ...user,
-                      avatar: response.data.image_url
+                    await axiosInstance.post('/auth/upload-avatar', formData, {
+                      headers: { 'Content-Type': 'multipart/form-data' }
                     });
+                    alert('تم تحديث الصورة الشخصية بنجاح!');
                     window.location.reload();
                   } catch (error) {
                     console.error('Error uploading avatar:', error);
