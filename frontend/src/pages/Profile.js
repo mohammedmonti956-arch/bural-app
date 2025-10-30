@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import LoginPrompt from '../components/LoginPrompt';
-import { FaStore, FaEnvelope, FaPhone, FaSignOutAlt, FaPlusCircle } from 'react-icons/fa';
+import axiosInstance from '../api/axios';
+import { FaStore, FaEnvelope, FaPhone, FaSignOutAlt, FaPlusCircle, FaTrashAlt, FaExclamationTriangle } from 'react-icons/fa';
 
 const Profile = () => {
   const { user, logout, isAuthenticated } = useAuth();
