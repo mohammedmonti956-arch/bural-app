@@ -1,46 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import LoginPrompt from '../components/LoginPrompt';
 import axiosInstance from '../api/axios';
-import { FaStore, FaEnvelope, FaPhone, FaSignOutAlt, FaPlusCircle, FaTrashAlt, FaExclamationTriangle } from 'react-icons/fa';
+import { FaStore, FaEnvelope, FaPhone, FaSignOutAlt, FaPlusCircle } from 'react-icons/fa';
 
 const Profile = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [deleting, setDeleting] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
-  };
-
-  const handleDeleteAllStores = async () => {
-    const confirmed = window.confirm(
-      'هل أنت متأكد من حذف جميع متاجرك؟ هذا الإجراء لا يمكن التراجع عنه!'
-    );
-    
-    if (!confirmed) return;
-    
-    const doubleConfirm = window.confirm(
-      'تأكيد نهائي: سيتم حذف جميع المتاجر والمنتجات والخدمات المرتبطة بها. هل تريد المتابعة؟'
-    );
-    
-    if (!doubleConfirm) return;
-    
-    setDeleting(true);
-    try {
-      const response = await axiosInstance.delete('/stores/owner/delete-all');
-      alert(response.data.message);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting stores:', error);
-      alert('فشل حذف المتاجر');
-    } finally {
-      setDeleting(false);
-    }
   };
 
   if (!isAuthenticated) {
