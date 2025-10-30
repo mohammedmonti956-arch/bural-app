@@ -864,7 +864,7 @@ async def update_order_status(order_id: str, order_status: str, current_user: Us
     
     await db.orders.update_one(
         {"id": order_id},
-        {"$set": {"status": status}}
+        {"$set": {"order_status": order_status}}
     )
     
     return {"message": "تم تحديث حالة الطلب"}
