@@ -308,77 +308,15 @@ const StoreDetails = () => {
               <div data-testid="products-section">
                 {products.length > 0 ? (
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {products.map((product) => {
-                      const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-                      const productImages = product.images && product.images.length > 0 ? product.images : [];
-                      
-                      return (
-                        <div key={product.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition" data-testid={`product-${product.id}`}>
-                          {productImages.length > 0 && (
-                            <div className="h-48 bg-gray-200 relative">
-                              <img src={productImages[selectedImageIndex] || productImages[0]} alt={product.name} className="w-full h-full object-cover" />
-                              {productImages.length > 1 && (
-                                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-                                  {productImages.map((_, index) => (
-                                    <button
-                                      key={index}
-                                      onClick={() => setSelectedImageIndex(index)}
-                                      className={`w-2 h-2 rounded-full ${index === selectedImageIndex ? 'bg-white' : 'bg-gray-400'}`}
-                                    />
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          )}
-                          <div className="p-4">
-                            <h3 className="font-bold text-lg mb-2">{product.name}</h3>
-                            <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                            <div className="flex items-center justify-between mb-2">
-                              <p className="text-blue-600 font-bold text-xl">{product.price} ر.س</p>
-                              <div className="flex items-center gap-2">
-                                <button 
-                                  onClick={async () => {
-                                    if (!user) {
-                                      alert('يجب تسجيل الدخول للإعجاب بالمنتج');
-                                      return;
-                                    }
-                                    try {
-                                      await axiosInstance.post(`/products/${product.id}/like`);
-                                      fetchStoreData();
-                                    } catch (error) {
-                                      console.error('Error liking product:', error);
-                                    }
-                                  }}
-                                  className="text-red-500 hover:scale-110 transition"
-                                >
-                                  <FaHeart className="text-xl" />
-                                </button>
-                                <span className="text-gray-600">{product.likes || 0}</span>
-                              </div>
-                            </div>
-                            <p className="text-gray-500 text-sm mb-3">المخزون: {product.stock}</p>
-                            
-                            {/* زر الطلب/المراسلة */}
-                            <Link
-                              to={user ? `/messages/${store.owner_id}?product=${product.id}` : '/login'}
-                              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition"
-                            >
-                              <FaShoppingCart /> اطلب الآن
-                            </Link>
-                            
-                            {/* رابط لموقع المتجر */}
-                            <a
-                              href={`https://www.google.com/maps?q=${store.latitude},${store.longitude}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 mt-2 text-blue-600 hover:text-blue-700 text-sm"
-                            >
-                              <FaMapMarkerAlt /> موقع المتجر
-                            </a>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {products.map((product) => (
+                      <ProductCard 
+                        key={product.id}
+                        product={product}
+                        store={store}
+                        user={user}
+                        onLike={handleLike}
+                      />
+                    ))}
                   </div>
                 ) : (
                   <p className="text-center text-gray-500 py-8" data-testid="no-products">لا توجد منتجات</p>
