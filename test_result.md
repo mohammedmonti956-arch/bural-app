@@ -101,3 +101,167 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  إكمال الميزات التالية في تطبيق Boral:
+  1. زر الطلب للمنتجات يؤدي إلى المراسلة مع صاحب المتجر
+  2. تعديلات المنتجات والأسعار والحذف
+  3. وصول الخريطة للموقع الجغرافي للمستخدم مباشرة
+  4. السماح برفع أكثر من صورة لنفس المنتج مع جعل مقاييس الصور قياسية
+  5. مسح وإلغاء جميع المتاجر التي تم تسجيل الدخول فيها ببريد إلكتروني
+  6. إصلاح الأخطاء في الإعجاب بالمنتج
+  7. إضافة صور الملف الشخصي لكل صاحب متجر
+  8. تحديد موقع المتجر للمستخدم في صفحة المتجر أو تحت كل منتج
+
+backend:
+  - task: "Order button messaging integration"
+    implemented: true
+    working: "needs_testing"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Feature was mentioned as recently implemented, needs verification"
+
+  - task: "Multiple images per product - backend model"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to update Product model from single 'image' to 'images: List[str]'"
+
+  - task: "Delete all stores by email endpoint"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need new DELETE endpoint to remove all stores for authenticated user"
+
+  - task: "Profile picture upload endpoint"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "User model has avatar field but need upload endpoint"
+
+  - task: "Product like/unlike functionality"
+    implemented: true
+    working: "needs_testing"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "needs_testing"
+        agent: "main"
+        comment: "Endpoints exist at lines 458 and 478, user reported bugs need verification"
+
+frontend:
+  - task: "Product edit/delete UI in ManageProducts"
+    implemented: false
+    working: "NA"
+    file: "ManageProducts.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need UI to edit product details, pricing, and delete products"
+
+  - task: "Multiple images upload UI for products"
+    implemented: false
+    working: "NA"
+    file: "ManageProducts.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to support multiple image upload with standard sizing"
+
+  - task: "Map geolocation auto-focus"
+    implemented: false
+    working: "NA"
+    file: "MapView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Map should detect and zoom to user's current location on load"
+
+  - task: "Store location display in StoreDetails"
+    implemented: false
+    working: "NA"
+    file: "StoreDetails.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Add small map widget showing store location"
+
+  - task: "Profile picture upload UI"
+    implemented: false
+    working: "NA"
+    file: "Profile.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Add UI to upload and display user avatar"
+
+  - task: "Delete all stores button"
+    implemented: false
+    working: "NA"
+    file: "Profile.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Add button in profile to delete all user's stores"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Multiple images per product - backend model"
+    - "Product edit/delete UI in ManageProducts"
+    - "Map geolocation auto-focus"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Starting implementation of all requested features. Will implement in phases: 1) Backend model updates, 2) Product management, 3) Map enhancements, 4) Profile features, 5) Admin features, 6) Bug fixes. Starting with backend updates for multiple images support."
