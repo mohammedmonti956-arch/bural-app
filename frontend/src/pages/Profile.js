@@ -134,10 +134,39 @@ const Profile = () => {
           </div>
         )}
 
+        {/* حذف جميع المتاجر */}
+        {user.is_store_owner && (
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h3 className="text-xl font-bold text-red-600 mb-4">⚠️ منطقة الخطر</h3>
+            <p className="text-gray-600 mb-4 text-sm">سيتم حذف جميع متاجرك ومنتجاتك وخدماتك بشكل دائم. لا يمكن التراجع عن هذا الإجراء!</p>
+            <button
+              onClick={async () => {
+                if (!window.confirm('هل أنت متأكد من حذف جميع متاجرك؟ هذا الإجراء لا يمكن التراجع عنه!')) return;
+                if (!window.confirm('تأكيد نهائي: سيتم حذف كل شيء!')) return;
+                
+                try {
+                  const stores = await axiosInstance.get('/stores/owner/my-stores');
+                  for (const store of stores.data) {
+                    await axiosInstance.delete(`/stores/${store.id}`);
+                  }
+                  alert('تم حذف جميع متاجرك بنجاح');
+                  window.location.reload();
+                } catch (error) {
+                  console.error('Error deleting stores:', error);
+                  alert('حدث خطأ في حذف المتاجر');
+                }
+              }}
+              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+            >
+              🗑️ حذف جميع المتاجر والبدء من جديد
+            </button>
+          </div>
+        )}
+
         <div className="bg-white rounded-lg shadow-lg p-6">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+            className="w-full flex items-center justify-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition"
           >
             <FaSignOutAlt /> تسجيل الخروج
           </button>
