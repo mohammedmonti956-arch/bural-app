@@ -25,7 +25,23 @@ const Stores = () => {
       if (searchTerm) params.search = searchTerm;
 
       const response = await axiosInstance.get('/stores', { params });
-      setStores(response.data);
+      
+      // Fetch owner avatars for each store
+      const storesWithAvatars = await Promise.all(
+        response.data.map(async (store) => {
+          try {
+            const ownerRes = await axiosInstance.get(`/users/${store.owner_id}`);
+            if (ownerRes.data && ownerRes.data.avatar) {
+              store.owner_avatar = ownerRes.data.avatar;
+            }
+          } catch (error) {
+            console.error('Error fetching owner avatar for store:', store.id);
+          }
+          return store;
+        })
+      );
+      
+      setStores(storesWithAvatars);
     } catch (error) {
       console.error('Error fetching stores:', error);
     } finally {
