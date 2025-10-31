@@ -121,6 +121,11 @@ const MapView = () => {
                 key={store.id}
                 position={[store.latitude, store.longitude]}
                 icon={storeIcon}
+                eventHandlers={{
+                  click: () => {
+                    window.location.href = `/stores/${store.id}`;
+                  }
+                }}
               >
                 <Popup maxWidth={300}>
                   <div className="p-2" dir="rtl" data-testid={`marker-popup-${store.id}`}>
