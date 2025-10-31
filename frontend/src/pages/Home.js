@@ -116,7 +116,7 @@ const Home = () => {
         ) : topStores.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {topStores.map((store) => (
-              <StoreCard key={store.id} store={store} />
+              <StoreCard key={store.id} store={store} showProductImage={true} />
             ))}
           </div>
         ) : (
