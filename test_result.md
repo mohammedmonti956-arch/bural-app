@@ -331,9 +331,9 @@ metadata:
 frontend:
   - task: "Order button messaging UI integration"
     implemented: true
-    working: true
+    working: false
     file: "StoreDetails.js, Messages.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -375,6 +375,98 @@ frontend:
         - Product images not displaying in message preview (structure ready)
         
         All core messaging functionality working as requested in Arabic specifications."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE FOUND: Order button redirects to /login even for authenticated users. During comprehensive testing with logged-in user 'ahmed_salem@example.com', the order button still redirects to login page instead of messages page. This breaks the core messaging functionality for authenticated users. URL generation or authentication check needs fixing."
+
+  - task: "Product Details Page Implementation"
+    implemented: true
+    working: true
+    file: "ProductDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PRODUCT DETAILS PAGE FULLY TESTED: All Arabic specifications met successfully:
+        
+        🔍 ACCESS METHODS WORKING:
+        - Click product image → opens ProductDetails (/products/{id}) ✅
+        - Click product name → opens ProductDetails ✅  
+        - Click 'عرض التفاصيل' button → opens ProductDetails ✅
+        
+        📋 REQUIRED CONTENT PRESENT:
+        - Back button 'العودة إلى المتجر' in header ✅
+        - Main product image display area (h-96) ✅
+        - Product name as large heading (h1) ✅
+        - Price in blue, large font (900 ر.س) ✅
+        - Stock count display ('المخزون: 5') ✅
+        - Full description with 'الوصف' section ✅
+        - Category badge display ('منتجات') ✅
+        - Green 'اطلب الآن' button with shopping cart icon ✅
+        - Store info card with name, description, rating ✅
+        - 'موقع المتجر على الخريطة' button ✅
+        
+        🔄 NAVIGATION WORKING:
+        - Back button returns to store page ✅
+        - Store name click navigates to store ✅
+        - Map button opens Google Maps ✅
+        
+        ⚠️ MINOR ISSUES:
+        - Like button present but count not updating (authentication issue)
+        - No multiple images found to test thumbnail navigation
+        
+        All core ProductDetails functionality working perfectly!"
+
+  - task: "Search Engine for Products"
+    implemented: true
+    working: true
+    file: "Search.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ SEARCH ENGINE FULLY FUNCTIONAL: All Arabic search specifications working:
+        
+        🔍 SEARCH PAGE FEATURES:
+        - Search page (/search) loads correctly ✅
+        - Search input with placeholder: 'ابحث عن متاجر، منتجات أو خدمات...' ✅
+        - Search button 'بحث' functional ✅
+        
+        📊 SEARCH RESULTS DISPLAY:
+        - Product results section 'المنتجات (1)' ✅
+        - Product cards show image, name, description ✅
+        - Price and stock information displayed ✅
+        - Multiple images indicator '+X صورة' ready ✅
+        
+        🔗 SEARCH INTEGRATION:
+        - Click product from search → opens ProductDetails ✅
+        - Search → Results → Product Details flow working ✅
+        - Product links properly formatted (/products/{id}) ✅
+        
+        🎯 FULL INTEGRATION TESTED:
+        - Search → Product Results → Click Product → Details Page → Order Button → Login
+        - Complete user journey working as specified ✅
+        
+        Search engine meeting all Arabic requirements perfectly!"
+
+  - task: "Product Like Functionality"
+    implemented: true
+    working: false
+    file: "ProductDetails.js"
+    stuck_count: 1
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Product like/unlike functionality works perfectly. POST /products/{id}/like correctly increments likes (0→1). DELETE /products/{id}/like correctly decrements likes (1→0). Duplicate like/unlike properly rejected with 400 status. No bugs found - functionality working as expected."
+      - working: false
+        agent: "testing"
+        comment: "❌ FRONTEND LIKE BUTTON ISSUE: Like button present in ProductDetails page but not updating count when clicked. Initial count shows '1' but remains '1' after clicking. Backend endpoints confirmed working, but frontend integration has authentication or state update issue. Button click registers but count doesn't change."
 
 test_plan:
   current_focus: []
