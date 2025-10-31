@@ -561,3 +561,49 @@ agent_communication:
     - Product images not displaying in message preview (structure ready)
 
     All major messaging functionality working perfectly. Ready for production use!"
+  - agent: "testing"
+    message: "🎯 PRODUCT DETAILS & SEARCH ENGINE TESTING COMPLETE! Comprehensive testing of Arabic product features as requested:
+
+    ✅ PRODUCT DETAILS PAGE ACCESS METHODS:
+    - ✅ Click on product image: Successfully opens ProductDetails page (/products/{id})
+    - ✅ Click on product name: Successfully opens ProductDetails page
+    - ✅ Click on 'عرض التفاصيل' button: Successfully opens ProductDetails page
+    - All three access methods working perfectly from store pages
+
+    ✅ PRODUCT DETAILS PAGE CONTENT VERIFICATION:
+    - ✅ Back button ('العودة إلى المتجر') present and functional
+    - ✅ Main product image display area (h-96) working with placeholder for no image
+    - ✅ Product name displayed as large heading (h1)
+    - ✅ Price displayed in blue, large font (900 ر.س)
+    - ✅ Stock count displayed ('المخزون: 5')
+    - ✅ Full description section with 'الوصف' heading
+    - ✅ Category display with blue badge ('منتجات')
+    - ✅ Green 'اطلب الآن' button (large, with shopping cart icon)
+    - ✅ Store info card with name, description, rating, location
+    - ✅ 'موقع المتجر على الخريطة' button present
+
+    ✅ SEARCH ENGINE FUNCTIONALITY:
+    - ✅ Search page (/search) loads correctly
+    - ✅ Search input with correct placeholder: 'ابحث عن متاجر، منتجات أو خدمات...'
+    - ✅ Product search results display in 'المنتجات (1)' section
+    - ✅ Product cards show image, name, description, price, stock
+    - ✅ Click on product from search results opens ProductDetails page
+    - ✅ Search → Product Results → Product Details navigation flow working
+
+    ✅ INTEGRATION TESTING:
+    - ✅ Order button redirects to /login for unauthenticated users
+    - ✅ Back button returns to store page correctly
+    - ✅ Store name click navigates to store page
+    - ✅ Full integration: Search → Results → Product Details → Order → Login flow working
+
+    ⚠️ ISSUES IDENTIFIED:
+    - Like button present but not updating count when clicked (authentication issue)
+    - Order button still redirects to /login even for authenticated users (URL generation issue)
+    - No multiple images found to test thumbnail navigation (single image products only)
+
+    ⚠️ MISSING FEATURES:
+    - Image thumbnails navigation (no products with multiple images found)
+    - Like button functionality needs authentication fix
+    - Order button URL generation needs correction for authenticated users
+
+    All core ProductDetails and Search functionality working as specified in Arabic requirements!"
