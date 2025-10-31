@@ -83,18 +83,34 @@ const Search = () => {
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">المنتجات ({results.products.length})</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {results.products.map((product) => (
-                        <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                          {product.image && (
-                            <div className="h-48 bg-gray-200">
-                              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                        <Link 
+                          key={product.id} 
+                          to={`/products/${product.id}`}
+                          className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition"
+                        >
+                          {product.images && product.images.length > 0 ? (
+                            <div className="h-48 bg-gray-200 relative">
+                              <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                              {product.images.length > 1 && (
+                                <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                                  +{product.images.length - 1} صورة
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="h-48 bg-gray-200 flex items-center justify-center">
+                              <span className="text-gray-400 text-6xl">📦</span>
                             </div>
                           )}
                           <div className="p-4">
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">{product.name}</h3>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition">{product.name}</h3>
                             <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                            <p className="text-blue-600 font-bold text-lg">{product.price} ر.س</p>
+                            <div className="flex items-center justify-between">
+                              <p className="text-blue-600 font-bold text-lg">{product.price} ر.س</p>
+                              <span className="text-sm text-gray-500">المخزون: {product.stock}</span>
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </div>
