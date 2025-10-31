@@ -25,8 +25,26 @@ const Home = () => {
         axiosInstance.get('/analytics/top-rated-stores?limit=6'),
         axiosInstance.get('/analytics/popular-products?limit=6')
       ]);
+      
+      // Fetch product images for each store
+      const storesWithProducts = await Promise.all(
+        topStoresRes.data.map(async (store) => {
+          try {
+            const productsRes = await axiosInstance.get(`/stores/${store.id}/products`);
+            const products = productsRes.data;
+            // Get first product image if available
+            if (products.length > 0 && products[0].images && products[0].images.length > 0) {
+              store.product_image = products[0].images[0];
+            }
+          } catch (error) {
+            console.error('Error fetching products for store:', store.id);
+          }
+          return store;
+        })
+      );
+      
       setStores(storesRes.data.slice(0, 6));
-      setTopStores(topStoresRes.data);
+      setTopStores(storesWithProducts);
       setPopularProducts(productsRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
