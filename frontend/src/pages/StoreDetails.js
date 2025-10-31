@@ -59,7 +59,7 @@ const ProductCard = ({ product, store, user, onLike }) => {
         
         {/* زر الطلب/المراسلة */}
         <Link
-          to={user ? `/messages/${store.owner_id}?product=${product.id}` : '/login'}
+          to={user ? `/messages?receiver=${store.owner_id}&product=${product.id}` : '/login'}
           className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition"
         >
           <FaShoppingCart /> اطلب الآن
