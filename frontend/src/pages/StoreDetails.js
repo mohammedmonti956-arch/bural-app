@@ -24,24 +24,39 @@ const ProductCard = ({ product, store, user, onLike }) => {
   
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition" data-testid={`product-${product.id}`}>
-      {productImages.length > 0 && (
-        <div className="h-48 bg-gray-200 relative">
-          <img src={productImages[selectedImageIndex]} alt={product.name} className="w-full h-full object-cover" />
-          {productImages.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-              {productImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImageIndex(index)}
-                  className={`w-2 h-2 rounded-full ${index === selectedImageIndex ? 'bg-white' : 'bg-gray-400 opacity-70'}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      {/* Product Image - Clickable */}
+      <Link to={`/products/${product.id}`}>
+        {productImages.length > 0 ? (
+          <div className="h-48 bg-gray-200 relative cursor-pointer hover:opacity-90 transition">
+            <img src={productImages[selectedImageIndex]} alt={product.name} className="w-full h-full object-cover" />
+            {productImages.length > 1 && (
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+                {productImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedImageIndex(index);
+                    }}
+                    className={`w-2 h-2 rounded-full ${index === selectedImageIndex ? 'bg-white' : 'bg-gray-400 opacity-70'}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="h-48 bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
+            <span className="text-gray-400 text-6xl">📦</span>
+          </div>
+        )}
+      </Link>
+
       <div className="p-4">
-        <h3 className="font-bold text-lg mb-2">{product.name}</h3>
+        {/* Product Title - Clickable */}
+        <Link to={`/products/${product.id}`}>
+          <h3 className="font-bold text-lg mb-2 hover:text-blue-600 transition cursor-pointer">{product.name}</h3>
+        </Link>
+        
         <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
         <div className="flex items-center justify-between mb-2">
           <p className="text-blue-600 font-bold text-xl">{product.price} ر.س</p>
@@ -60,20 +75,18 @@ const ProductCard = ({ product, store, user, onLike }) => {
         {/* زر الطلب/المراسلة */}
         <Link
           to={user ? `/messages?receiver=${store.owner_id}&product=${product.id}` : '/login'}
-          className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition"
+          className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition mb-2"
         >
           <FaShoppingCart /> اطلب الآن
         </Link>
         
-        {/* رابط لموقع المتجر */}
-        <a
-          href={`https://www.google.com/maps?q=${store.latitude},${store.longitude}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 mt-2 text-blue-600 hover:text-blue-700 text-sm"
+        {/* زر عرض التفاصيل */}
+        <Link
+          to={`/products/${product.id}`}
+          className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm"
         >
-          <FaMapMarkerAlt /> موقع المتجر
-        </a>
+          عرض التفاصيل
+        </Link>
       </div>
     </div>
   );
