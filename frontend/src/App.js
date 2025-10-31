@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Stores from "./pages/Stores";
 import StoreDetails from "./pages/StoreDetails";
+import ProductDetails from "./pages/ProductDetails";
 import MapView from "./pages/MapView";
 import Profile from "./pages/Profile";
 import CreateStore from "./pages/CreateStore";
