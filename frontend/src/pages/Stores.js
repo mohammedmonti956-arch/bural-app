@@ -100,7 +100,7 @@ const Stores = () => {
             <p className="text-gray-600 mb-4" data-testid="stores-count">تم العثور على {stores.length} متجر</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="stores-grid">
               {stores.map((store) => (
-                <StoreCard key={store.id} store={store} />
+                <StoreCard key={store.id} store={store} showOwnerAvatar={true} />
               ))}
             </div>
           </>
