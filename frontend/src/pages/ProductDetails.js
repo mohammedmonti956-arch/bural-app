@@ -175,13 +175,23 @@ const ProductDetails = () => {
               </div>
 
               {/* Order Button */}
-              <Link
-                to={user ? `/messages?receiver=${store.owner_id}&product=${product.id}` : '/login'}
-                className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg transition w-full mb-4"
-              >
-                <FaShoppingCart className="text-xl" />
-                اطلب الآن
-              </Link>
+              {user ? (
+                <Link
+                  to={`/messages?receiver=${store.owner_id}&product=${product.id}`}
+                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg transition w-full mb-4"
+                >
+                  <FaShoppingCart className="text-xl" />
+                  اطلب الآن
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg transition w-full mb-4"
+                >
+                  <FaShoppingCart className="text-xl" />
+                  سجل دخولك للطلب
+                </Link>
+              )}
             </div>
 
             {/* Store Info Card */}
