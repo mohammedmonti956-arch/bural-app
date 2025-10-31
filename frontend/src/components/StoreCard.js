@@ -2,16 +2,38 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 
-const StoreCard = ({ store }) => {
+const StoreCard = ({ store, showProductImage = false, showOwnerAvatar = false }) => {
+  // Determine which image to show
+  let backgroundImage = null;
+  if (showProductImage && store.product_image) {
+    backgroundImage = store.product_image;
+  } else if (showOwnerAvatar && store.owner_avatar) {
+    backgroundImage = store.owner_avatar;
+  } else if (store.cover_image) {
+    backgroundImage = store.cover_image;
+  }
+
   return (
     <Link
       to={`/stores/${store.id}`}
       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition group"
       data-testid={`store-card-${store.id}`}
     >
-      <div className="h-48 bg-gray-200 overflow-hidden">
-        {store.cover_image ? (
-          <img src={store.cover_image} alt={store.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
+      <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden relative">
+        {backgroundImage ? (
+          <>
+            <img 
+              src={backgroundImage} 
+              alt={store.name} 
+              className="w-full h-full object-cover group-hover:scale-105 transition opacity-80"
+            />
+            {/* Dark overlay for better text visibility */}
+            <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+            {/* Store name overlay */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+              <h3 className="text-white text-xl font-bold">{store.name}</h3>
+            </div>
+          </>
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400 text-6xl">
             <FaMapMarkerAlt />
@@ -22,7 +44,9 @@ const StoreCard = ({ store }) => {
       <div className="p-4" dir="rtl">
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-gray-900 mb-1" data-testid="store-name">{store.name}</h3>
+            {!backgroundImage && (
+              <h3 className="text-lg font-bold text-gray-900 mb-1" data-testid="store-name">{store.name}</h3>
+            )}
             <p className="text-sm text-gray-600 line-clamp-2" data-testid="store-description">{store.description}</p>
           </div>
         </div>
