@@ -231,8 +231,10 @@ const Messages = () => {
                   key={index}
                   className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
                 >
-                  <p className="font-semibold">{conv.user_name}</p>
-                  <p className="text-sm text-gray-600">{conv.last_message}</p>
+                  <p className="font-semibold">{conv.user_name || 'مستخدم'}</p>
+                  <p className="text-sm text-gray-600">
+                    {typeof conv.last_message === 'string' ? conv.last_message : 'رسالة جديدة'}
+                  </p>
                 </div>
               ))}
             </div>
