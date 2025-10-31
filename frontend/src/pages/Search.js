@@ -45,7 +45,7 @@ const Search = () => {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="ابحث عن متاجر أو خدمات..."
+                placeholder="ابحث عن متاجر، منتجات أو خدمات..."
                 className="w-full pr-12 pl-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
             </div>
