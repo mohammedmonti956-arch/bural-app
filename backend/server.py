@@ -271,6 +271,20 @@ async def login(credentials: UserLogin):
 async def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
+@api_router.get("/users/{user_id}")
+async def get_user_info(user_id: str):
+    """Get public user information (avatar only for now)"""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="المستخدم غير موجود")
+    
+    # Return only public information
+    return {
+        "id": user.get("id"),
+        "username": user.get("username"),
+        "avatar": user.get("avatar")
+    }
+
 @api_router.put("/auth/profile", response_model=User)
 async def update_profile(user_data: UserBase, current_user: User = Depends(get_current_user)):
     update_data = user_data.model_dump()
