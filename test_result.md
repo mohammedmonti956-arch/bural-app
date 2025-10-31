@@ -469,10 +469,14 @@ frontend:
         comment: "❌ FRONTEND LIKE BUTTON ISSUE: Like button present in ProductDetails page but not updating count when clicked. Initial count shows '1' but remains '1' after clicking. Backend endpoints confirmed working, but frontend integration has authentication or state update issue. Button click registers but count doesn't change."
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
-  test_all: true
-  test_priority: "completed"
+  current_focus:
+    - "Order button messaging UI integration"
+    - "Product Like Functionality"
+  stuck_tasks:
+    - "Order button messaging UI integration"
+    - "Product Like Functionality"
+  test_all: false
+  test_priority: "stuck_first"
 
 agent_communication:
   - agent: "main"
