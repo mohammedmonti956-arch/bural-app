@@ -349,6 +349,17 @@ const StoreDetails = () => {
       </div>
 
       <BottomNavigation />
+
+      {/* Product Quick View Modal */}
+      {selectedProduct && (
+        <ProductQuickView
+          product={selectedProduct}
+          store={store}
+          onClose={() => setSelectedProduct(null)}
+          onLike={handleLike}
+          user={user}
+        />
+      )}
     </div>
   );
 };
