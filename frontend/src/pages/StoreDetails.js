@@ -274,7 +274,7 @@ const StoreDetails = () => {
             {activeTab === 'products' && (
               <div data-testid="products-section">
                 {products.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {products.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -283,7 +283,7 @@ const StoreDetails = () => {
                         user={user}
                         onLike={handleLike}
                         onQuickView={setSelectedProduct}
-                        horizontal={true}
+                        horizontal={false}
                       />
                     ))}
                   </div>
