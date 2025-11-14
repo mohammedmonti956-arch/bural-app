@@ -137,24 +137,22 @@ const Home = () => {
           <h2 className="text-3xl font-bold mb-6">المنتجات الأكثر إعجاباً 🔥</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {popularProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                {product.image && (
-                  <div className="h-48 bg-gray-200">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <div className="p-4">
-                  <h3 className="font-bold text-lg mb-2">{product.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-blue-600 font-bold text-xl">{product.price} ر.س</span>
-                    <div className="flex items-center gap-1 text-red-500">
-                      <FaStar />
-                      <span className="font-bold">{product.likes || 0}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickView={(prod) => {
+                  setSelectedProduct(prod);
+                  // Find store for this product
+                  stores.forEach(async (s) => {
+                    const productsRes = await axiosInstance.get(`/stores/${s.id}/products`);
+                    if (productsRes.data.find(p => p.id === prod.id)) {
+                      setSelectedStore(s);
+                    }
+                  });
+                }}
+                user={user}
+                showOrderButton={true}
+              />
             ))}
           </div>
         </div>
