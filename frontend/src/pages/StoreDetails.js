@@ -29,6 +29,7 @@ const StoreDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('products');
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     fetchStoreData();
