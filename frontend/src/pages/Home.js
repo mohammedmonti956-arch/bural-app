@@ -15,6 +15,8 @@ const Home = () => {
   const [topStores, setTopStores] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedStore, setSelectedStore] = useState(null);
 
   useEffect(() => {
     fetchData();
