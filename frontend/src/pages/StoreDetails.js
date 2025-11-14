@@ -4,7 +4,8 @@ import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine } from 'react-icons/fa';
+import ProductModal from '../components/ProductModal';
+import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaShare, FaChartLine, FaShoppingCart } from 'react-icons/fa';
 
 const StoreDetails = () => {
   const { id } = useParams();
