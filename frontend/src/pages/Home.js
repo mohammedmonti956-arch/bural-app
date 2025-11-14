@@ -158,6 +158,19 @@ const Home = () => {
         </div>
       )}
 
+      {/* Product Quick View Modal */}
+      {selectedProduct && (
+        <ProductQuickView
+          product={selectedProduct}
+          store={selectedStore}
+          onClose={() => {
+            setSelectedProduct(null);
+            setSelectedStore(null);
+          }}
+          user={user}
+        />
+      )}
+
       <BottomNavigation />
     </div>
   );
