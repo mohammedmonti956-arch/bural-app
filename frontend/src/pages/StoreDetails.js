@@ -4,7 +4,9 @@ import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine, FaShoppingCart, FaComments } from 'react-icons/fa';
+import ProductCard from '../components/ProductCard';
+import ProductQuickView from '../components/ProductQuickView';
+import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowLeft, FaEdit, FaBox, FaCog, FaHeart, FaRegHeart, FaShare, FaChartLine } from 'react-icons/fa';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -16,8 +18,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
-
-// Product Card Component
 const ProductCard = ({ product, store, user, onLike }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const productImages = product.images && product.images.length > 0 ? product.images : [];
