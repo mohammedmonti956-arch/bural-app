@@ -62,6 +62,7 @@ const Home = () => {
       setStores(storesRes.data.slice(0, 6));
       setTopStores(storesWithProducts);
       setPopularProducts(productsRes.data);
+      setServices(allServices.slice(0, 4));
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
