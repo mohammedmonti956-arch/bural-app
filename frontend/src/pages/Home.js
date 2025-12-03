@@ -93,153 +93,143 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Products and Services Section */}
-      {!loading && (popularProducts.length > 0 || services.length > 0) && (
-        <div className="bg-gray-50 py-12">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">المنتجات والخدمات المميزة</h2>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Products */}
-              {popularProducts.slice(0, 2).map((product) => (
-                <div 
-                  key={product.id}
-                  className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer overflow-hidden"
-                  onClick={() => {
-                    setSelectedProduct(product);
-                    // Find store
-                    stores.forEach(async (s) => {
-                      try {
-                        const productsRes = await axiosInstance.get(`/stores/${s.id}/products`);
-                        if (productsRes.data.find(p => p.id === product.id)) {
-                          setSelectedStore(s);
-                        }
-                      } catch (err) {
-                        console.error(err);
-                      }
-                    });
-                  }}
-                >
-                  <div className="h-48 bg-gray-200">
-                    {product.images && product.images[0] ? (
-                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-6xl">📦</div>
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-bold text-lg line-clamp-1">{product.name}</h3>
-                      <span className="text-blue-600 font-bold text-xl whitespace-nowrap mr-2">{product.price} ر.س</span>
+      {/* Main 3 Components Section */}
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="grid lg:grid-cols-3 gap-8">
+          
+          {/* 1. Products Component */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <FaBox className="text-2xl" />
+                <h2 className="text-xl font-bold">المنتجات</h2>
+              </div>
+              <Link to="/search" className="text-sm hover:underline">
+                عرض الكل <FaArrowLeft className="inline" />
+              </Link>
+            </div>
+            <div className="p-4 space-y-3 max-h-96 overflow-y-auto">
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex gap-3 border-b border-gray-100 pb-3 cursor-pointer hover:bg-gray-50 rounded p-2 transition"
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setSelectedStore(product.store);
+                    }}
+                  >
+                    <div className="w-20 h-20 bg-gray-200 rounded flex-shrink-0">
+                      {product.images && product.images[0] ? (
+                        <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover rounded" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">📦</div>
+                      )}
                     </div>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition">
-                      عرض التفاصيل
-                    </button>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm line-clamp-1">{product.name}</h3>
+                      <p className="text-xs text-gray-600 line-clamp-1">{product.store?.name}</p>
+                      <p className="text-blue-600 font-bold mt-1">{product.price} ر.س</p>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-400">
+                  <FaBox className="text-4xl mx-auto mb-2" />
+                  <p>لا توجد منتجات</p>
                 </div>
-              ))}
+              )}
+            </div>
+          </div>
 
-              {/* Services */}
-              {services.slice(0, 2).map((service) => (
-                <div 
-                  key={service.id}
-                  className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-                >
-                  <div className="h-48 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                    <span className="text-white text-6xl">⚙️</span>
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-bold text-lg line-clamp-1">{service.name}</h3>
-                      <span className="text-purple-600 font-bold text-xl whitespace-nowrap mr-2">{service.price} ر.س</span>
+          {/* 2. Services Component */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <FaStore className="text-2xl" />
+                <h2 className="text-xl font-bold">الخدمات</h2>
+              </div>
+              <Link to="/services" className="text-sm hover:underline">
+                عرض الكل <FaArrowLeft className="inline" />
+              </Link>
+            </div>
+            <div className="p-4 space-y-3 max-h-96 overflow-y-auto">
+              {services.length > 0 ? (
+                services.map((service) => (
+                  <Link
+                    key={service.id}
+                    to={service.store ? `/stores/${service.store.id}` : '/services'}
+                    className="flex gap-3 border-b border-gray-100 pb-3 hover:bg-gray-50 rounded p-2 transition block"
+                  >
+                    <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded flex-shrink-0 flex items-center justify-center text-white text-3xl">
+                      ⚙️
                     </div>
-                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{service.description}</p>
-                    {service.store && (
-                      <p className="text-sm text-gray-500 mb-3">📍 {service.store.name}</p>
-                    )}
-                    <Link 
-                      to={service.store ? `/stores/${service.store.id}` : '/services'}
-                      className="block w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-semibold transition text-center"
-                    >
-                      عرض التفاصيل
-                    </Link>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm line-clamp-1">{service.name}</h3>
+                      <p className="text-xs text-gray-600 line-clamp-1">{service.store?.name}</p>
+                      <p className="text-purple-600 font-bold mt-1">{service.price} ر.س</p>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-400">
+                  <FaStore className="text-4xl mx-auto mb-2" />
+                  <p>لا توجد خدمات</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 3. Map Component */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <FaMapMarkedAlt className="text-2xl" />
+                <h2 className="text-xl font-bold">الخريطة</h2>
+              </div>
+              <Link to="/map" className="text-sm hover:underline">
+                عرض كامل <FaArrowLeft className="inline" />
+              </Link>
+            </div>
+            <div className="p-4">
+              <Link
+                to="/map"
+                className="block relative h-80 bg-gray-100 rounded overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-500 opacity-20"></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <FaMapMarkedAlt className="text-6xl text-green-600 mb-4 group-hover:scale-110 transition" />
+                  <p className="text-xl font-bold text-gray-700">اكتشف المتاجر</p>
+                  <p className="text-gray-600 mt-2">على الخريطة</p>
+                  <div className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg font-semibold group-hover:bg-green-700 transition">
+                    فتح الخريطة
                   </div>
                 </div>
-              ))}
+                {stores.length > 0 && (
+                  <div className="absolute bottom-4 left-4 right-4 bg-white bg-opacity-90 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-gray-700">
+                      📍 {stores.length} متجر متاح
+                    </p>
+                  </div>
+                )}
+              </Link>
             </div>
           </div>
         </div>
-      )}
-
-      {/* Features */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-center p-6 bg-gray-50 rounded-lg" data-testid="feature-stores">
-            <div className="text-4xl mb-4 text-blue-600"><FaStore className="mx-auto" /></div>
-            <h3 className="text-xl font-bold mb-2">متاجر متنوعة</h3>
-            <p className="text-gray-600">اكتشف مجموعة واسعة من المتاجر في منطقتك</p>
-          </div>
-          <div className="text-center p-6 bg-gray-50 rounded-lg" data-testid="feature-map">
-            <div className="text-4xl mb-4 text-blue-600"><FaMapMarkedAlt className="mx-auto" /></div>
-            <h3 className="text-xl font-bold mb-2">خرائط تفاعلية</h3>
-            <p className="text-gray-600">تصفح المتاجر على الخريطة بسهولة</p>
-          </div>
-          <div className="text-center p-6 bg-gray-50 rounded-lg" data-testid="feature-reviews">
-            <div className="text-4xl mb-4 text-blue-600"><FaStar className="mx-auto" /></div>
-            <h3 className="text-xl font-bold mb-2">تقييمات موثوقة</h3>
-            <p className="text-gray-600">اقرأ تقييمات المستخدمين الحقيقية</p>
-          </div>
-        </div>
       </div>
 
-      {/* Top Rated Stores */}
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold">المتاجر الأعلى تقييماً ⭐</h2>
-          <Link to="/stores" className="text-blue-600 hover:text-blue-700 font-semibold">عرض الكل ←</Link>
-        </div>
-        
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          </div>
-        ) : topStores.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {topStores.map((store) => (
-              <StoreCard key={store.id} store={store} showProductImage={true} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <FaStore className="mx-auto text-6xl text-gray-300 mb-4" />
-            <p className="text-gray-500 text-lg">لا توجد متاجر حالياً</p>
-          </div>
-        )}
-      </div>
-
-      {/* Popular Products */}
-      {popularProducts.length > 0 && (
+      {/* Stores Section */}
+      {stores.length > 0 && (
         <div className="max-w-6xl mx-auto px-4 py-8 bg-gray-100">
-          <h2 className="text-3xl font-bold mb-6">المنتجات الأكثر إعجاباً 🔥</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold">المتاجر المميزة</h2>
+            <Link to="/stores" className="text-blue-600 hover:text-blue-700 font-semibold">
+              عرض الكل <FaArrowLeft className="inline" />
+            </Link>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {popularProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onQuickView={(prod) => {
-                  setSelectedProduct(prod);
-                  // Find store for this product
-                  stores.forEach(async (s) => {
-                    const productsRes = await axiosInstance.get(`/stores/${s.id}/products`);
-                    if (productsRes.data.find(p => p.id === prod.id)) {
-                      setSelectedStore(s);
-                    }
-                  });
-                }}
-                user={user}
-                showOrderButton={true}
-              />
+            {stores.map((store) => (
+              <StoreCard key={store.id} store={store} showOwnerAvatar={true} />
             ))}
           </div>
         </div>
