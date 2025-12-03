@@ -14,6 +14,7 @@ const Home = () => {
   const [stores, setStores] = useState([]);
   const [topStores, setTopStores] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
@@ -27,8 +28,19 @@ const Home = () => {
       const [storesRes, topStoresRes, productsRes] = await Promise.all([
         axiosInstance.get('/stores'),
         axiosInstance.get('/analytics/top-rated-stores?limit=6'),
-        axiosInstance.get('/analytics/popular-products?limit=6')
+        axiosInstance.get('/analytics/popular-products?limit=4')
       ]);
+      
+      // Fetch services
+      const allServices = [];
+      for (const store of storesRes.data.slice(0, 4)) {
+        try {
+          const servicesRes = await axiosInstance.get(`/stores/${store.id}/services`);
+          allServices.push(...servicesRes.data.slice(0, 2).map(s => ({ ...s, store })));
+        } catch (err) {
+          console.error('Error fetching services:', err);
+        }
+      }
       
       // Fetch product images for each store
       const storesWithProducts = await Promise.all(
