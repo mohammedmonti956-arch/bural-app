@@ -56,29 +56,38 @@ const Home = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-20" dir="rtl">
+        <Header />
+        <div className="flex items-center justify-center h-96">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-white" dir="rtl">
+    <div className="min-h-screen bg-gray-50 pb-20" dir="rtl">
       <Header />
-      
+
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">مرحباً بك في بورال</h1>
-          <p className="text-xl mb-8 text-gray-300">اكتشف أفضل المتاجر والخدمات القريبة منك</p>
-          <div className="flex flex-wrap gap-4 justify-center">
+      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold mb-4">مرحباً بك في Boral</h1>
+          <p className="text-xl mb-8 text-blue-100">اكتشف أفضل المتاجر والخدمات المحلية</p>
+          <div className="flex gap-4 justify-center flex-wrap">
             <Link
               to="/stores"
-              data-testid="browse-stores-btn"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition flex items-center gap-2"
+              className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-semibold transition"
             >
-              <FaStore /> تصفح المتاجر
+              تصفح المتاجر
             </Link>
             <Link
               to="/map"
-              data-testid="explore-map-btn"
-              className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition flex items-center gap-2"
+              className="bg-blue-500 hover:bg-blue-400 text-white px-8 py-3 rounded-lg font-semibold transition"
             >
-              <FaMapMarkedAlt /> استكشف الخريطة
+              عرض الخريطة
             </Link>
           </div>
         </div>
