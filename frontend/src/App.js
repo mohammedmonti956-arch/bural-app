@@ -38,8 +38,9 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/login" element={<Navigate to="/auth" replace />} />
+      <Route path="/signup" element={<Navigate to="/auth" replace />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/stores/:id" element={<StoreDetails />} />
       <Route path="/products/:id" element={<ProductDetails />} />
