@@ -98,6 +98,85 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Products and Services Section */}
+      {!loading && (popularProducts.length > 0 || services.length > 0) && (
+        <div className="bg-gray-50 py-12">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">المنتجات والخدمات المميزة</h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Products */}
+              {popularProducts.slice(0, 2).map((product) => (
+                <div 
+                  key={product.id}
+                  className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer overflow-hidden"
+                  onClick={() => {
+                    setSelectedProduct(product);
+                    // Find store
+                    stores.forEach(async (s) => {
+                      try {
+                        const productsRes = await axiosInstance.get(`/stores/${s.id}/products`);
+                        if (productsRes.data.find(p => p.id === product.id)) {
+                          setSelectedStore(s);
+                        }
+                      } catch (err) {
+                        console.error(err);
+                      }
+                    });
+                  }}
+                >
+                  <div className="h-48 bg-gray-200">
+                    {product.images && product.images[0] ? (
+                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-6xl">📦</div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-bold text-lg line-clamp-1">{product.name}</h3>
+                      <span className="text-blue-600 font-bold text-xl whitespace-nowrap mr-2">{product.price} ر.س</span>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition">
+                      عرض التفاصيل
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {/* Services */}
+              {services.slice(0, 2).map((service) => (
+                <div 
+                  key={service.id}
+                  className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+                >
+                  <div className="h-48 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+                    <span className="text-white text-6xl">⚙️</span>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-bold text-lg line-clamp-1">{service.name}</h3>
+                      <span className="text-purple-600 font-bold text-xl whitespace-nowrap mr-2">{service.price} ر.س</span>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{service.description}</p>
+                    {service.store && (
+                      <p className="text-sm text-gray-500 mb-3">📍 {service.store.name}</p>
+                    )}
+                    <Link 
+                      to={service.store ? `/stores/${service.store.id}` : '/services'}
+                      className="block w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-semibold transition text-center"
+                    >
+                      عرض التفاصيل
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Features */}
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-8">
