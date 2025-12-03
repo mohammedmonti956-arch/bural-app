@@ -24,44 +24,31 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const [storesRes, topStoresRes, productsRes] = await Promise.all([
-        axiosInstance.get('/stores'),
-        axiosInstance.get('/analytics/top-rated-stores?limit=6'),
-        axiosInstance.get('/analytics/popular-products?limit=4')
-      ]);
+      const storesRes = await axiosInstance.get('/stores');
+      const storesData = storesRes.data.slice(0, 6);
       
-      // Fetch services
+      // Fetch products from all stores
+      const allProducts = [];
       const allServices = [];
-      for (const store of storesRes.data.slice(0, 4)) {
+      
+      for (const store of storesData) {
         try {
-          const servicesRes = await axiosInstance.get(`/stores/${store.id}/services`);
-          allServices.push(...servicesRes.data.slice(0, 2).map(s => ({ ...s, store })));
+          const [productsRes, servicesRes] = await Promise.all([
+            axiosInstance.get(`/stores/${store.id}/products`),
+            axiosInstance.get(`/stores/${store.id}/services`)
+          ]);
+          
+          // Add store info to products and services
+          productsRes.data.forEach(p => allProducts.push({ ...p, store }));
+          servicesRes.data.forEach(s => allServices.push({ ...s, store }));
         } catch (err) {
-          console.error('Error fetching services:', err);
+          console.error('Error fetching store data:', err);
         }
       }
       
-      // Fetch product images for each store
-      const storesWithProducts = await Promise.all(
-        topStoresRes.data.map(async (store) => {
-          try {
-            const productsRes = await axiosInstance.get(`/stores/${store.id}/products`);
-            const products = productsRes.data;
-            // Get first product image if available
-            if (products.length > 0 && products[0].images && products[0].images.length > 0) {
-              store.product_image = products[0].images[0];
-            }
-          } catch (error) {
-            console.error('Error fetching products for store:', store.id);
-          }
-          return store;
-        })
-      );
-      
-      setStores(storesRes.data.slice(0, 6));
-      setTopStores(storesWithProducts);
-      setPopularProducts(productsRes.data);
-      setServices(allServices.slice(0, 4));
+      setStores(storesData);
+      setProducts(allProducts.slice(0, 6));
+      setServices(allServices.slice(0, 6));
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
