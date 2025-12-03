@@ -150,7 +150,7 @@ const ProductQuickView = ({ product, store, onClose, onLike, user }) => {
             {/* Actions */}
             <div className="space-y-2">
               <Link
-                to={user ? `/messages?receiver=${store?.owner_id}&product=${product.id}` : '/login'}
+                to={user ? `/messages?receiver=${store?.owner_id}&product=${product.id}` : '/auth'}
                 className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg transition w-full"
               >
                 <FaShoppingCart />
