@@ -12,8 +12,7 @@ import { FaStore, FaBox, FaMapMarkedAlt, FaArrowLeft } from 'react-icons/fa';
 const Home = () => {
   const { user } = useAuth();
   const [stores, setStores] = useState([]);
-  const [topStores, setTopStores] = useState([]);
-  const [popularProducts, setPopularProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
