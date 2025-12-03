@@ -185,7 +185,7 @@ const ProductDetails = () => {
                 </Link>
               ) : (
                 <Link
-                  to="/login"
+                  to="/auth"
                   className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg transition w-full mb-4"
                 >
                   <FaShoppingCart className="text-xl" />
