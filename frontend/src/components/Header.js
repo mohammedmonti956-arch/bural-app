@@ -93,7 +93,7 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition" data-testid="login-link">
+              <Link to="/auth" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition" data-testid="login-link">
                 <FaSignInAlt />
                 <span>تسجيل الدخول</span>
               </Link>
