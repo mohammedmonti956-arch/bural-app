@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
-import { FaStore, FaMapMarkedAlt, FaSearch, FaStar } from 'react-icons/fa';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import StoreCard from '../components/StoreCard';
 import ProductCard from '../components/ProductCard';
 import ProductQuickView from '../components/ProductQuickView';
+import { FaStore, FaBox, FaMapMarkedAlt, FaArrowLeft } from 'react-icons/fa';
 
 const Home = () => {
   const { user } = useAuth();
